@@ -6,21 +6,12 @@ import java.util.List;
 /**
  * Created by h on 25/03/16.
  */
-public class Recipe {
-    public int id;
-    public String title;
-    public String image;
-
+public class Recipe extends SimpleRecipe {
     public int servings;
     public int preparationMinutes;
     public int cookingMinutes;
-    public int readyInMinutes;
 
-    public List<Ingredient> extendentIngredients;
+    public List<Ingredient> extendedIngredients;
 
     public Nutrition nutrition;
-
-
-
-
 }
