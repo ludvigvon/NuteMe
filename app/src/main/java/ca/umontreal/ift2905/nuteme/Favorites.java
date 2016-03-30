@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -31,6 +32,11 @@ import ca.umontreal.ift2905.nuteme.DataModel.Recipe;
 
 public class Favorites extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
+//    enum Direction {LEFT, RIGHT;}
+
+
+//    static final int DELTA = 50;
+
     public static final String FAVORITE_ID = "id";
     public static final String FAVORITE_JSON = "json";
 
@@ -38,6 +44,9 @@ public class Favorites extends AppCompatActivity implements AdapterView.OnItemCl
     Button b;
 
     DBHelper helper;
+
+//    int swipePosition;
+//    float historicX = Float.NaN, historicY = Float.NaN;
 
     List<Recipe> favorites = new ArrayList<Recipe>();
     boolean[] checked;
@@ -78,12 +87,14 @@ public class Favorites extends AppCompatActivity implements AdapterView.OnItemCl
         ListAdapter adapter = new ListAdapter();
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(Favorites.this);
+//        lv.setOnTouchListener(Favorites.this);
 
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+//        swipePosition = position;
         Log.d("Favorites", "Item clicked id: " + favorites.get(position).id);
 
 //        Intent intent = new Intent(this, DetailsActivity.class);
@@ -106,6 +117,13 @@ public class Favorites extends AppCompatActivity implements AdapterView.OnItemCl
         Type type = new TypeToken<List<Recipe>>() {}.getType();
         String json = gson.toJson(recipes, type);
 
+        Log.d("Json", json);
+        List<Recipe> fromJson = gson.fromJson(json, type);
+
+        for (Recipe recipe : fromJson) {
+            Log.d("Json", recipe.title);
+        }
+
 //        Intent intent = new Intent(this, DetailsActivity.class);
 //        intent.putExtra(FAVORITE_JSON, json);
 //
@@ -117,7 +135,6 @@ public class Favorites extends AppCompatActivity implements AdapterView.OnItemCl
 
 //        for (Recipe recipe : fromJson) {
 //            Log.d("Json", recipe.title);
-//        }
     }
 
     @Override
@@ -126,6 +143,40 @@ public class Favorites extends AppCompatActivity implements AdapterView.OnItemCl
         checked[pos] = buttonView.isChecked();
         Log.d("onCheckedChanged", String.valueOf(buttonView.isChecked()));
     }
+
+    /*@Override
+    public boolean onTouch(View v, MotionEvent event) {
+        // TODO Auto-generated method stub
+        switch (event.getAction())
+        {
+            case MotionEvent.ACTION_DOWN:
+                historicX = event.getX();
+                historicY = event.getY();
+                break;
+
+            case MotionEvent.ACTION_UP:
+                if (event.getX() - historicX < -DELTA)
+                {
+                    FunctionDeleteRowWhenSlidingLeft();
+                    return true;
+                }
+                else if (event.getX() - historicX > DELTA)
+                {
+                    FunctionDeleteRowWhenSlidingRight();
+                    return true;
+                } break;
+            default: return false;
+        }
+        return false;
+    }
+
+    private void FunctionDeleteRowWhenSlidingLeft() {
+        FunctionDeleteRowWhenSlidingRight();
+    }
+
+    private void FunctionDeleteRowWhenSlidingRight() {
+
+    }*/
 
     public class ListAdapter extends BaseAdapter {
 
