@@ -22,18 +22,6 @@ public class NutrientFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.nutrients_details, container, false);
-        //ImageView img = (ImageView)v.findViewById(R.id.recipe_image_details);
-        TextView title = (TextView)v.findViewById(R.id.nutrient_title_details);
-        TextView description = (TextView)v.findViewById(R.id.description);
-
-        Bundle args = getArguments();
-        String stitle = args.getString(DetailedViewsFragment.TITLE);
-        //String surl =args.getString(DetailedViewsFragment.URL);
-        String sdesc =args.getString(DetailedViewsFragment.DESC);
-
-        title.setText(stitle);
-        description.setText(sdesc);
-        //Picasso.with(getContext()).load(surl).into(img);
 
         return v;
     }

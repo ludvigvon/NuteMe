@@ -88,7 +88,6 @@ public class DetailedViewsFragment extends Fragment {
             DynamicPagerAdapter adapter = new DynamicPagerAdapter(getChildFragmentManager(), fragmentId, recipes);
             pager.setAdapter(adapter);
         }
-
     }
 
     public class DynamicPagerAdapter extends FragmentPagerAdapter {
@@ -149,6 +148,4 @@ public class DetailedViewsFragment extends Fragment {
             return recipes.size();
         }
     }
-
-
 }
