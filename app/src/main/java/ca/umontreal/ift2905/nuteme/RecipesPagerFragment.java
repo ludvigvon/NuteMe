@@ -32,7 +32,7 @@ public class RecipesPagerFragment extends Fragment {
 
         parentActivity = (DetailedViews) getActivity();
 
-        View v = inflater.inflate(R.layout.fragment_recipes, container, false);
+        View v = inflater.inflate(R.layout.recipes_fragment, container, false);
         pager = (ViewPager)v.findViewById(R.id.detailedRecipes_page);
 
         recipes = parentActivity.getRecipes();

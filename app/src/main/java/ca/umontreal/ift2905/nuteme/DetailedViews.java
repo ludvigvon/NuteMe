@@ -29,7 +29,7 @@ public class DetailedViews extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detailed_views);
+        setContentView(R.layout.detailed_views_activity);
 
         tablayout = (TabLayout)findViewById(R.id.detailedViews_tablayout);
         pager = (ViewPager)findViewById(R.id.detailedViews_pager);
