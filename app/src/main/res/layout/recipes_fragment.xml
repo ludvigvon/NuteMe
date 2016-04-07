@@ -12,6 +12,6 @@ tools:context="ca.umontreal.ift2905.nuteme.DetailedViews">
 <android.support.v4.view.ViewPager
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/pager_detailedIngredients"
+    android:id="@+id/detailedRecipes_page"
     android:layout_centerHorizontal="true" />
 </RelativeLayout>
