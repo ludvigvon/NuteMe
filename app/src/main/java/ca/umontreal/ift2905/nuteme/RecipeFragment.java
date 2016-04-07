@@ -16,7 +16,6 @@ import com.squareup.picasso.Picasso;
  */
 public class RecipeFragment extends Fragment {
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -24,12 +23,12 @@ public class RecipeFragment extends Fragment {
         View v = inflater.inflate(R.layout.recipes_details, container, false);
         ImageView img = (ImageView)v.findViewById(R.id.recipe_image_details);
         TextView title = (TextView)v.findViewById(R.id.recipe_title_details);
-        TextView description = (TextView)v.findViewById(R.id.description);
+        TextView description = (TextView)v.findViewById(R.id.recipe_description);
 
         Bundle args = getArguments();
-        String stitle = args.getString(DetailedViewsFragment.TITLE);
-        String surl = args.getString(DetailedViewsFragment.URL);
-        //String sdesc =args.getString(DetailedViewsFragment.DESC);
+        String stitle = args.getString(RecipesPagerFragment.TITLE);
+        String surl = args.getString(RecipesPagerFragment.URL);
+        //String sdesc =args.getString(RecipesPagerFragment.DESC);
 
         title.setText(stitle);
         //description.setText(sdesc);

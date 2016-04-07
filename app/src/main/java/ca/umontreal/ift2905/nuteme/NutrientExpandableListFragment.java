@@ -13,37 +13,38 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 import ca.umontreal.ift2905.nuteme.DataModel.Recipe;
 
 /**
- * Created by h on 26/03/16.
+ * Created by h on 06/04/16.
  */
-public class IngredientFragment extends Fragment {
+public class NutrientExpandableListFragment extends Fragment {
 
     ExpandableListView listView;
     List<Recipe> recipes;
+    DetailedViews parentActivity;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.ingredients_details, container, false);
+        parentActivity = (DetailedViews) getActivity();
 
-        listView = (ExpandableListView)v.findViewById(R.id.expandableListViewIngredients);
+        View v = inflater.inflate(R.layout.nutrients_details, container, false);
+        listView = (ExpandableListView)v.findViewById(R.id.nutrients_expandableListView);
 
-        Bundle args = getArguments();
-        String json = args.getString(DetailedViews.RECIPES);
+//        Bundle args = getArguments();
+//        String json = args.getString(DetailedViews.RECIPES);
+//
+//        Gson gson = new Gson();
+//        Type type = new TypeToken<List<Recipe>>() {}.getType();
+//        recipes = gson.fromJson(json, type);
 
-        Gson gson = new Gson();
-        Type type = new TypeToken<List<Recipe>>() {}.getType();
-        recipes = gson.fromJson(json, type);
+        recipes = parentActivity.getRecipes();
 
         for (Recipe recipe : recipes) {
             Log.d("Json", recipe.title);
@@ -64,18 +65,18 @@ public class IngredientFragment extends Fragment {
 
         public ListAdapter(){
             //this.ctx = context;
-            inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            inflater = (LayoutInflater)parentActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
         @Override
         public int getGroupCount() {
-            // TODO: aggregate ingredients over all recipes
+            // TODO: aggregate nutrients over all recipes
             return testRecipe.nutrition.ingredients.size();
         }
 
         @Override
         public int getChildrenCount(int groupPosition) {
-            // TODO: aggregate ingredients over all recipes
+            // TODO: aggregate nutrients over all recipes
             return testRecipe.nutrition.ingredients.get(groupPosition).nutrients.size();
         }
 
@@ -107,20 +108,21 @@ public class IngredientFragment extends Fragment {
         @Override
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             if(convertView==null){
-                convertView = inflater.inflate(R.layout.ingredients_listheader, parent, false);
+                convertView = inflater.inflate(R.layout.nutrients_listheader, parent, false);
             }
-            TextView tv = (TextView)convertView.findViewById(R.id.ingredients_header_text);
-            tv.setText(testRecipe.nutrition.ingredients.get(groupPosition).originalString);
+            TextView tv = (TextView)convertView.findViewById(R.id.nutrients_header_text);
+            // TODO: mock text
+            tv.setText(testRecipe.nutrition.ingredients.get(groupPosition).name);
             return convertView;
         }
 
         @Override
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
             if(convertView==null){
-                convertView = inflater.inflate(R.layout.ingredients_listitem, parent, false);
+                convertView = inflater.inflate(R.layout.nutrients_listitem, parent, false);
             }
-            TextView tv = (TextView)convertView.findViewById(R.id.ingredients_item_nutrient);
-
+            TextView tv = (TextView)convertView.findViewById(R.id.nutrients_item_recipe);
+            // TODO: mock text
             String name = testRecipe.nutrition.ingredients.get(groupPosition).nutrients.get(childPosition).name;
 
             tv.setText(name);

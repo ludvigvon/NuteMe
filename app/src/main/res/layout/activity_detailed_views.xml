@@ -21,7 +21,7 @@ tools:context="ca.umontreal.ift2905.nuteme.DetailedViews">
 <android.support.v4.view.ViewPager
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/pager_detailedViews"
+    android:id="@+id/detailedViews_pager"
     android:layout_below="@+id/detailedViews_tablayout"
     android:layout_centerHorizontal="true"
     android:layout_above="@+id/detailedViews_button_newSearch" />
@@ -32,6 +32,6 @@ tools:context="ca.umontreal.ift2905.nuteme.DetailedViews">
         android:text="New Search"
         android:id="@+id/detailedViews_button_newSearch"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/pager_detailedViews"
-        android:layout_alignEnd="@+id/pager_detailedViews" />
+        android:layout_alignRight="@+id/detailedViews_pager"
+        android:layout_alignEnd="@+id/detailedViews_pager" />
 </RelativeLayout>
