@@ -6,6 +6,17 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!-- from mina-->
+        <item name="android:colorBackground">@color/background_material_light</item>
+    </style>
+
+    <!-- from mina-->
+    <style name="NuteMe" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:colorForeground">@android:color/white</item>
+        <item name="android:colorBackground">@android:color/holo_green_light</item>
+        <item name="android:windowBackground">@android:color/holo_green_light</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/darker_gray</item>
     </style>
 
     <style name="NutrientsCustomTabLayout" parent="Widget.Design.TabLayout">
@@ -24,5 +35,8 @@
         <item name="android:textSize">10sp</item>
         <item name="textAllCaps">false</item>
     </style>
+
+
+
 
 </resources>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" value="integer" name="TAG_ID1"/>
+    <item type="id" value="integer" name="TAG_ID2"/>
+</resources>

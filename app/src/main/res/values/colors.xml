@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--<resources>-->
+    <!--<color name="colorPrimary">#3F51B5</color>-->
+    <!--<color name="colorPrimaryDark">#303F9F</color>-->
+    <!--<color name="colorAccent">#FF4081</color>-->
+    <!--<color name="accent_material_light">#009688</color>-->
+<!--</resources>-->
+<!--from mina-->
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="accent_material_light">#009688</color>
+    <color name="colorPrimary">#9eba8a</color>
+    <color name="colorPrimaryDark">#99cc00</color>
+    <color name="colorAccent">#9e9e9e</color>
+    <color name="primary_material_dark">#4caf50</color>
+    <color name="accent_material_light">#64dd17</color>
+    <color name="holo_green_dark">#669900</color>
+    <color name="holo_green_light">#cce0be</color>
+    <color name="foreground_material_light">#000000</color>
+    <color name="primary_dark_material_dark_1">#388e3c</color>
+    <color name="primary_material_light_1">#4caf50</color>
+    <color name="black">#b71b1b</color>
+    <color name="background_material_light">#cce0be</color>
 </resources>

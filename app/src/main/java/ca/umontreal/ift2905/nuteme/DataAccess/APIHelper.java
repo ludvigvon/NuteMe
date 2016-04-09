@@ -34,7 +34,7 @@ public class APIHelper {
     }
 
     // prefix image url with https://spoonacular.com/recipeImages/
-    public List<SimpleRecipe> seachRecipes(String keyWord) throws IOException {
+    public Recipes seachRecipes(String keyWord) throws IOException {
         // get json
         String url = String.format(SEARCH_RECIPES_URL, keyWord);
         OkHttpClient client = new OkHttpClient();
@@ -47,7 +47,7 @@ public class APIHelper {
         Moshi moshi = new Moshi.Builder().build();
         JsonAdapter<Recipes> jsonAdapter = moshi.adapter(Recipes.class);
 
-        return jsonAdapter.fromJson(json).results;
+        return jsonAdapter.fromJson(json);
     }
 
     public SimpleRecipe getRecipeSummary(int id) throws IOException {
