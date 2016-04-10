@@ -103,19 +103,23 @@ public class APIHelper {
 
 
     public List<Recipe> getDetailedRecipes(List<Integer> ids) {
-        Log.d("API", "Going to api server!!!");
-        if (recipes!= null)
-            Log.d("API", "Before initialize - Recipes count: " + recipes.size());
-        else
-            Log.d("API", "Before initialize - Recipes is null");
+//        Log.d("API", "Going to api server!!!");
+//        if (recipes!= null)
+//            Log.d("API", "Before initialize - Recipes count: " + recipes.size());
+//        else
+//            Log.d("API", "Before initialize - Recipes is null");
         recipes = new ArrayList<>();
-        Log.d("API", "After initialize - Recipes count: " + recipes.size());
+//        Log.d("API", "After initialize - Recipes count: " + recipes.size());
 
         Recipe recipe;
         for (Integer id : ids) {
             try {
-                recipe = getRecipe(id, true);
-                recipes.add(recipe);
+                if (id != null) {
+                    recipe = getRecipe(id, true);
+                    if (recipe != null && recipe.id != 0) {
+                        recipes.add(recipe);
+                    }
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
