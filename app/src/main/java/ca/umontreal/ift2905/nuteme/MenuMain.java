@@ -38,6 +38,8 @@ public class MenuMain extends AppCompatActivity {
     private final int SEARCH_RESULTS_REQUEST_CODE = 1;
     private final int FAVORITES_REQUEST_CODE = 2;
 
+    public static final String MENU_IDS = "MenuIDs";
+
     ImageView searchButton;
     EditText searchField;
     LinearLayout horizLayout;
@@ -165,9 +167,6 @@ public class MenuMain extends AppCompatActivity {
             fav.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO: Mina, quand checked, il faut faire:
-
-
                     if (((ToggleButton) v).isChecked()) {
                         // The toggle is enabled
                         LinearLayout parent1 = (LinearLayout) v.getParent();
@@ -236,15 +235,13 @@ public class MenuMain extends AppCompatActivity {
             calcButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ArrayList<Integer> ids = new ArrayList<Integer>();
+                    ArrayList<Integer> ids = new ArrayList<>();
                     int childCount = vertLinearlayout.getChildCount();
                     for(int i=0; i<childCount; ++i){
                         ids.add((Integer) vertLinearlayout.getChildAt(i).getTag(R.id.TAG_ID2));
-                        Toast.makeText(MenuMain.this, ""+ids.get(i), Toast.LENGTH_LONG).show();
-
                     }
-                    Intent intent = new Intent(MenuMain.this,DetailedViews.class );
-                    intent.putIntegerArrayListExtra("IDS", (ArrayList<Integer>) ids);
+                    Intent intent = new Intent(MenuMain.this,Summary.class );
+                    intent.putIntegerArrayListExtra(MENU_IDS, ids);
                     startActivity(intent);
                 }
             });

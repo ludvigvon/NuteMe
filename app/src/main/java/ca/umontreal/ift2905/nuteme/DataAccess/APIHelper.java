@@ -25,12 +25,22 @@ import okhttp3.Response;
  */
 public class APIHelper {
 
+    private static APIHelper instance = null;
+    private List<Recipe> recipes = null;
+
     private static final String X_MASHAPE_KEY = "X-Mashape-Key";
     private static final String X_MASHAPE_VALUE = "vAqNvzgwvdmshYrsPdGjebs8052qp17L6B6jsnJnkEy2zDMHlG";
     private static final String RECIPE_URL = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/%s/information?includeNutrition=%s";
     private static final String SEARCH_RECIPES_URL = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?query=%s";
 
-    public APIHelper() {
+    protected APIHelper() {
+    }
+
+    public static APIHelper getInstance() {
+        if (instance == null){
+            instance = new APIHelper();
+        }
+        return instance;
     }
 
     // prefix image url with https://spoonacular.com/recipeImages/
@@ -86,13 +96,25 @@ public class APIHelper {
         return response.body().string();
     }
 
-    public List<Recipe> getDetailedRecipes(int[] ids) {
+    public List<Recipe> getDetailedRecipes(){        
+        return recipes;
+    }
+
+
+
+    public List<Recipe> getDetailedRecipes(List<Integer> ids) {
         Log.d("API", "Going to api server!!!");
-        List<Recipe> recipes = new ArrayList<Recipe>();
+        if (recipes!= null)
+            Log.d("API", "Before initialize - Recipes count: " + recipes.size());
+        else
+            Log.d("API", "Before initialize - Recipes is null");
+        recipes = new ArrayList<>();
+        Log.d("API", "After initialize - Recipes count: " + recipes.size());
+
         Recipe recipe;
-        for (int i = 0; i < ids.length; i++) {
+        for (Integer id : ids) {
             try {
-                recipe = getRecipe(ids[i], true);
+                recipe = getRecipe(id, true);
                 recipes.add(recipe);
             } catch (IOException e) {
                 e.printStackTrace();

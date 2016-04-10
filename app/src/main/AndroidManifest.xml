@@ -13,15 +13,14 @@
         <activity android:name=".MenuMain">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".Favorites" />
         <activity android:name=".SearchResults" />
-        <activity android:name=".DetailedViews" />
-        <activity android:name=".Summary" />
         <activity android:name=".RecipeDescription"></activity>
+        <activity android:name=".Summary" />
+        <activity android:name=".DetailedViews" />
     </application>
 
 </manifest>

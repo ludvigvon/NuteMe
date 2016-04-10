@@ -198,7 +198,7 @@ public class SearchResults extends AppCompatActivity implements AdapterView.OnIt
         @Override
         protected Recipes doInBackground(String... params) {
 
-            APIHelper api = new APIHelper();
+            APIHelper api = APIHelper.getInstance();
             try {
                 recipes = api.seachRecipes(query);
             } catch (IOException e) {
