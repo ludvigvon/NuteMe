@@ -27,7 +27,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import ca.umontreal.ift2905.nuteme.DataAccess.DBHelper;
-import ca.umontreal.ift2905.nuteme.DataModel.Recipe;
 import ca.umontreal.ift2905.nuteme.DataModel.SimpleRecipe;
 
 public class Favorites extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
@@ -152,7 +151,7 @@ public class Favorites extends AppCompatActivity implements AdapterView.OnItemCl
         public View getView(int position, View convertView, ViewGroup parent) {
             View v = convertView;
             if (v == null) {
-                v = inflater.inflate(R.layout.favorites_rows, parent, false);
+                v = inflater.inflate(R.layout.favorites_listitem, parent, false);
             }
 
             CheckBox cb = (CheckBox) v.findViewById(R.id.checkBox);
