@@ -147,7 +147,14 @@ public class MenuMain extends AppCompatActivity {
                     parent2.removeView(parent1);
                     count--;
                     if(count == 0 && (EditText)vertLinearlayout.getChildAt(count).findViewById(R.id.searchTextField)!= null) calcButton.setVisibility(View.INVISIBLE);
-
+                    else {
+                        int nbChilds = parent2.getChildCount();
+                        int j = 0;
+                        for(int i =0; i<nbChilds;++i){
+                            if((EditText)parent2.getChildAt(i).findViewById(R.id.searchTextField)!= null) ++j;
+                        }
+                        if(j == nbChilds)calcButton.setVisibility(View.INVISIBLE);
+                    }
                     if(count < 0){
                         count =0;
                         LayoutInflater inflater = getLayoutInflater();
