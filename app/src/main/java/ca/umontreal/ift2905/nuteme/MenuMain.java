@@ -168,7 +168,6 @@ public class MenuMain extends AppCompatActivity {
                         parent2.addView(view);
                         calcButton.setVisibility(View.INVISIBLE);
                     }
-
                 }
             });
 
