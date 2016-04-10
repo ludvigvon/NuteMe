@@ -35,11 +35,9 @@ import ca.umontreal.ift2905.nuteme.DataModel.SimpleRecipe;
  */
 public class MenuMain extends AppCompatActivity {
 
+    public static final String MENU_IDS = "MenuIDs";
     private final int SEARCH_RESULTS_REQUEST_CODE = 1;
     private final int FAVORITES_REQUEST_CODE = 2;
-
-    public static final String MENU_IDS = "MenuIDs";
-
     ImageView searchButton;
     EditText searchField;
     LinearLayout horizLayout;
@@ -51,7 +49,7 @@ public class MenuMain extends AppCompatActivity {
     Button addButton;
 
     View parent;
-    int count=0;
+    int count = 0;
     int position;
 
     @Override
@@ -62,7 +60,7 @@ public class MenuMain extends AppCompatActivity {
         searchButton = (ImageView) findViewById(R.id.searchImageView);
         searchField = (EditText) findViewById(R.id.searchTextField);
         horizLayout = (LinearLayout) findViewById(R.id.horizLinearLayout);
-        horizLayout.setTag(R.id.TAG_ID1,count);
+        horizLayout.setTag(R.id.TAG_ID1, count);
         addButton = (Button) findViewById(R.id.addButton);
 
         //menu_listitem button clickListener
@@ -104,7 +102,7 @@ public class MenuMain extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        if(id == R.id.favorites_star){
+        if (id == R.id.favorites_star) {
 
             Intent intent = new Intent(MenuMain.this, Favorites.class);
             startActivityForResult(intent, FAVORITES_REQUEST_CODE);
@@ -115,13 +113,13 @@ public class MenuMain extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         final Button calcButton = (Button) findViewById(R.id.calcButton);
-        if(resultCode == RESULT_OK && requestCode == SEARCH_RESULTS_REQUEST_CODE){
+        if (resultCode == RESULT_OK && requestCode == SEARCH_RESULTS_REQUEST_CODE) {
             String title = data.getStringExtra("Description");
             //String url = data.getStringExtra("ImgUrl");
             int id = Integer.valueOf(data.getStringExtra("ID"));
             final LinearLayout vertLinearlayout = (LinearLayout) findViewById(R.id.vertLinearLayout);
-            LinearLayout ll = (LinearLayout)vertLinearlayout.getChildAt(position);
-            ll.setTag(R.id.TAG_ID2,id);
+            LinearLayout ll = (LinearLayout) vertLinearlayout.getChildAt(position);
+            ll.setTag(R.id.TAG_ID2, id);
             //EditText et = (EditText) ll.findViewById(R.id.searchTextField);
             //ImageView iv = (ImageView) ll.findViewById(R.id.searchImageView);
 
@@ -139,23 +137,33 @@ public class MenuMain extends AppCompatActivity {
                     LinearLayout parent1 = (LinearLayout) v.getParent();
                     LinearLayout parent2 = (LinearLayout) parent1.getParent();
                     int currentIndex = parent2.indexOfChild(parent1);
-                    for(int i = currentIndex+1; i < parent2.getChildCount(); ++i){
+                    for (int i = currentIndex + 1; i < parent2.getChildCount(); ++i) {
                         View child = parent2.getChildAt(i);
-                        int tag = (int)child.getTag(R.id.TAG_ID1);
-                        child.setTag(R.id.TAG_ID1,--tag);
+                        int tag = (int) child.getTag(R.id.TAG_ID1);
+                        child.setTag(R.id.TAG_ID1, --tag);
                     }
                     parent2.removeView(parent1);
                     count--;
-                    if(count == 0 && (EditText)vertLinearlayout.getChildAt(count).findViewById(R.id.searchTextField)!= null) calcButton.setVisibility(View.INVISIBLE);
-
-                    if(count < 0){
-                        count =0;
+                    if (count == 0 && vertLinearlayout.getChildAt(count).findViewById(R.id.searchTextField) != null) {
+                        calcButton.setVisibility(View.INVISIBLE);
+                    }
+                    else {
+                        int nbChilds = parent2.getChildCount();
+                        int j = 0;
+                        for (int i = 0; i < nbChilds; ++i) {
+                            if ((EditText) parent2.getChildAt(i).findViewById(R.id.searchTextField) != null)
+                                ++j;
+                        }
+                        if (j == nbChilds) calcButton.setVisibility(View.INVISIBLE);
+                    }
+                    if (count < 0) {
+                        count = 0;
                         LayoutInflater inflater = getLayoutInflater();
 
                         //view now is the the linear layout of menu_listitem and we don't need to add the view to relative layout as above the parent of menu_listitem is relative layout
                         View view = inflater.inflate(R.layout.menu_listitem, parent2, false);
 
-                        view.setTag(R.id.TAG_ID1,count);
+                        view.setTag(R.id.TAG_ID1, count);
                         //LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(La)
                         parent2.addView(view);
                         calcButton.setVisibility(View.INVISIBLE);
@@ -170,7 +178,7 @@ public class MenuMain extends AppCompatActivity {
                     if (((ToggleButton) v).isChecked()) {
                         // The toggle is enabled
                         LinearLayout parent1 = (LinearLayout) v.getParent();
-                        int id = (Integer)parent1.getTag(R.id.TAG_ID2);
+                        int id = (Integer) parent1.getTag(R.id.TAG_ID2);
                         Intent intent = new Intent(MenuMain.this, Favorites.class);
                         intent.putExtra("ID", Integer.toString(id));
                         Toast.makeText(MenuMain.this, Integer.toString(id), Toast.LENGTH_SHORT).show();
@@ -201,7 +209,7 @@ public class MenuMain extends AppCompatActivity {
             //View view = inflater.inflate(R.layout.search_results_checkable_linear_layout, vg, false);
             LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            LinearLayout.LayoutParams layoutParams2 = new LinearLayout.LayoutParams(90,90);
+            LinearLayout.LayoutParams layoutParams2 = new LinearLayout.LayoutParams(90, 90);
             layoutParams1.weight = 1;
             layoutParams2.gravity = Gravity.CENTER_VERTICAL;
             description.setLayoutParams(layoutParams1);
@@ -229,7 +237,8 @@ public class MenuMain extends AppCompatActivity {
             ll.addView(description);
             ll.addView(fav);
 
-            if(calcButton.getVisibility() ==View.INVISIBLE) calcButton.setVisibility(View.VISIBLE);
+            if (calcButton.getVisibility() == View.INVISIBLE)
+                calcButton.setVisibility(View.VISIBLE);
 
             //calculate button
             calcButton.setOnClickListener(new View.OnClickListener() {
@@ -237,38 +246,37 @@ public class MenuMain extends AppCompatActivity {
                 public void onClick(View v) {
                     ArrayList<Integer> ids = new ArrayList<>();
                     int childCount = vertLinearlayout.getChildCount();
-                    for(int i=0; i<childCount; ++i){
+                    for (int i = 0; i < childCount; ++i) {
                         ids.add((Integer) vertLinearlayout.getChildAt(i).getTag(R.id.TAG_ID2));
                     }
-                    Intent intent = new Intent(MenuMain.this,Summary.class );
+                    Intent intent = new Intent(MenuMain.this, Summary.class);
                     intent.putIntegerArrayListExtra(MENU_IDS, ids);
                     startActivity(intent);
                 }
             });
-        }
-        else if(resultCode == RESULT_OK && requestCode == FAVORITES_REQUEST_CODE) {
+        } else if (resultCode == RESULT_OK && requestCode == FAVORITES_REQUEST_CODE) {
             // TODO: Mina, voici le data provenant de Favorites. Peux-tu t'occuper de l'affichage?
             Gson gson = new Gson();
-            Type type = new TypeToken<List<Recipe>>() {}.getType();
+            Type type = new TypeToken<List<Recipe>>() {
+            }.getType();
             String json = data.getStringExtra(Favorites.FAVORITE_JSON);
             List<SimpleRecipe> recipes = gson.fromJson(json, type);
 
             for (SimpleRecipe recipe : recipes) {
                 Log.d("Json", recipe.title);
             }
-        }
-        else{
+        } else {
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void search(View v){
+    public void search(View v) {
 
         View view = (View) v.getParent();//horizontal layout containing search button and textfield
 
         //int tag = (int) v.getTag();
-        EditText text = (EditText)view.findViewById(R.id.searchTextField);
-        position = (int)view.getTag(R.id.TAG_ID1);
+        EditText text = (EditText) view.findViewById(R.id.searchTextField);
+        position = (int) view.getTag(R.id.TAG_ID1);
         //text.setTag(view);
         query = text.getText().toString();
         Intent intent = new Intent(MenuMain.this, SearchResults.class);
