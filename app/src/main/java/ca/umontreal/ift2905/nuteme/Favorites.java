@@ -1,5 +1,6 @@
 package ca.umontreal.ift2905.nuteme;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,13 +28,9 @@ import java.util.List;
 
 import ca.umontreal.ift2905.nuteme.DataAccess.DBHelper;
 import ca.umontreal.ift2905.nuteme.DataModel.Recipe;
+import ca.umontreal.ift2905.nuteme.DataModel.SimpleRecipe;
 
 public class Favorites extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
-
-//    enum Direction {LEFT, RIGHT;}
-
-
-//    static final int DELTA = 50;
 
     public static final String FAVORITE_ID = "id";
     public static final String FAVORITE_JSON = "json";
@@ -46,7 +43,7 @@ public class Favorites extends AppCompatActivity implements AdapterView.OnItemCl
 //    int swipePosition;
 //    float historicX = Float.NaN, historicY = Float.NaN;
 
-    List<Recipe> favorites = new ArrayList<Recipe>();
+    List<SimpleRecipe> favorites = new ArrayList<SimpleRecipe>();
     boolean[] checked;
 
     @Override
@@ -67,7 +64,7 @@ public class Favorites extends AppCompatActivity implements AdapterView.OnItemCl
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
-            Recipe favorite = new Recipe();
+            SimpleRecipe favorite = new SimpleRecipe();
             favorite.id = cursor.getInt(cursor.getColumnIndex(DBHelper.F_ID));
             favorite.title = cursor.getString(cursor.getColumnIndex(DBHelper.F_TITLE));
             favorite.image = cursor.getString(cursor.getColumnIndex(DBHelper.F_IMG_URL));
@@ -103,8 +100,7 @@ public class Favorites extends AppCompatActivity implements AdapterView.OnItemCl
 
     @Override
     public void onClick(View v) {
-        List<Recipe> recipes = new ArrayList<Recipe>();
-        CheckBox cb;
+        List<SimpleRecipe> recipes = new ArrayList<>();
 
         for (int i = 0; i < favorites.size(); i++) {
             if (checked[i])
@@ -112,27 +108,14 @@ public class Favorites extends AppCompatActivity implements AdapterView.OnItemCl
         }
 
         Gson gson = new Gson();
-        Type type = new TypeToken<List<Recipe>>() {}.getType();
+        Type type = new TypeToken<List<SimpleRecipe>>() {}.getType();
         String json = gson.toJson(recipes, type);
 
-        Log.d("Json", json);
-        List<Recipe> fromJson = gson.fromJson(json, type);
+        Intent intent = new Intent(this, MenuMain.class);
+        intent.putExtra(FAVORITE_JSON, json);
 
-        for (Recipe recipe : fromJson) {
-            Log.d("Json", recipe.title);
-        }
-
-//        Intent intent = new Intent(this, DetailsActivity.class);
-//        intent.putExtra(FAVORITE_JSON, json);
-//
-//        startActivity(intent);
-
-
-//        Log.d("Json", json);
-//        List<Recipe> fromJson = gson.fromJson(json, type);
-
-//        for (Recipe recipe : fromJson) {
-//            Log.d("Json", recipe.title);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     @Override
@@ -141,40 +124,6 @@ public class Favorites extends AppCompatActivity implements AdapterView.OnItemCl
         checked[pos] = buttonView.isChecked();
         Log.d("onCheckedChanged", String.valueOf(buttonView.isChecked()));
     }
-
-    /*@Override
-    public boolean onTouch(View v, MotionEvent event) {
-        // TODO Auto-generated method stub
-        switch (event.getAction())
-        {
-            case MotionEvent.ACTION_DOWN:
-                historicX = event.getX();
-                historicY = event.getY();
-                break;
-
-            case MotionEvent.ACTION_UP:
-                if (event.getX() - historicX < -DELTA)
-                {
-                    FunctionDeleteRowWhenSlidingLeft();
-                    return true;
-                }
-                else if (event.getX() - historicX > DELTA)
-                {
-                    FunctionDeleteRowWhenSlidingRight();
-                    return true;
-                } break;
-            default: return false;
-        }
-        return false;
-    }
-
-    private void FunctionDeleteRowWhenSlidingLeft() {
-        FunctionDeleteRowWhenSlidingRight();
-    }
-
-    private void FunctionDeleteRowWhenSlidingRight() {
-
-    }*/
 
     public class ListAdapter extends BaseAdapter {
 
@@ -214,19 +163,13 @@ public class Favorites extends AppCompatActivity implements AdapterView.OnItemCl
             TextView tv = (TextView) v.findViewById(R.id.row_text);
             ImageView iv = (ImageView) v.findViewById(R.id.row_image);
 
-            Recipe recipe = favorites.get(position);
+            SimpleRecipe recipe = favorites.get(position);
             String title = favorites.get(position).title;
             String url = favorites.get(position).image;
 
             v.setTag(recipe);
             tv.setText(title);
             Picasso.with(getApplicationContext()).load(url).into(iv);
-
-//            if (position % 2 == 0) {
-//                v.setBackgroundColor(0xFF00FF00);
-//            } else {
-//                v.setBackgroundColor(0xFFFFFFFF);
-//            }
 
             return v;
         }

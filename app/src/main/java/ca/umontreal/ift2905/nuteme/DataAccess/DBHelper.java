@@ -11,6 +11,7 @@ import android.util.Log;
 import java.util.List;
 
 import ca.umontreal.ift2905.nuteme.DataModel.Recipe;
+import ca.umontreal.ift2905.nuteme.DataModel.SimpleRecipe;
 
 /**
  * Created by h on 25/03/16.
@@ -56,7 +57,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.delete(TABLE_FAVORITES, F_ID + "=" + id, null);
     }
 
-    public int insertFavorite(Recipe recipe){
+    public int insertFavorite(SimpleRecipe recipe){
         int nb = 0;
 
         ContentValues cv = new ContentValues();

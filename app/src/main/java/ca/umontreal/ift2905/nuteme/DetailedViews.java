@@ -34,46 +34,18 @@ public class DetailedViews extends AppCompatActivity  {
         tablayout = (TabLayout)findViewById(R.id.detailedViews_tablayout);
         pager = (ViewPager)findViewById(R.id.detailedViews_pager);
 
-        ApiAsyncTask run = new ApiAsyncTask();
-        run.execute();
+        recipesData = APIHelper.getInstance().getDetailedRecipes();
+
+        DetailedViewsPagerAdapter adapter = new DetailedViewsPagerAdapter(getSupportFragmentManager());
+        pager.setAdapter(adapter);
+
+        tablayout.setupWithViewPager(pager);
+
     }
 
     public List<Recipe> getRecipes(){
         return recipesData;
     }
-
-    public class ApiAsyncTask extends AsyncTask<String, String, List<Recipe>> {
-
-        public ApiAsyncTask() {}
-
-        @Override
-        protected List<Recipe> doInBackground(String... params) {
-            List<Recipe> recipes = null;
-            APIHelper api = new APIHelper();
-            try {
-                int[] ids = new int[]{310658, 163336, 203834, 325816, 485365};
-                recipes = api.getDetailedRecipes(ids);
-            }catch (Exception e){
-                Log.d("doInBackground", e.getMessage());
-            }
-
-            return recipes;
-        }
-
-        @Override
-        protected void onPostExecute(List<Recipe> recipes) {
-            super.onPostExecute(recipes);
-
-            recipesData = recipes;
-
-            DetailedViewsPagerAdapter adapter = new DetailedViewsPagerAdapter(getSupportFragmentManager());
-            pager.setAdapter(adapter);
-
-            tablayout.setupWithViewPager(pager);
-        }
-
-    }
-
 
     public class DetailedViewsPagerAdapter extends FragmentPagerAdapter {
 
@@ -81,14 +53,6 @@ public class DetailedViews extends AppCompatActivity  {
 
         @Override
         public Fragment getItem(int position) {
-
-//            Gson gson = new Gson();
-//            Type type = new TypeToken<List<Recipe>>() {}.getType();
-//            String json = gson.toJson(recipes, type);
-
-//            Bundle bundle = new Bundle();
-//            bundle.putString(RECIPES, json);
-
             Fragment fragment = null;
             switch(position){
                 case 0:
@@ -101,9 +65,6 @@ public class DetailedViews extends AppCompatActivity  {
                     fragment = new NutrientsTabPagerFragment();
                     break;
             }
-
-//            fragment.setArguments(bundle);
-
             return fragment;
         }
 
@@ -117,5 +78,4 @@ public class DetailedViews extends AppCompatActivity  {
             return TAB_TITLES[position];
         }
     }
-
 }
