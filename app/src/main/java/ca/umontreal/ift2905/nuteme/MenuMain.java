@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,14 +19,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
+
+import ca.umontreal.ift2905.nuteme.DataAccess.DBHelper;
+import ca.umontreal.ift2905.nuteme.DataModel.Recipe;
+import ca.umontreal.ift2905.nuteme.DataModel.SimpleRecipe;
 
 /**
  * Created by h on 09/04/16.
  */
 public class MenuMain extends AppCompatActivity {
 
-    private final int REQUEST_CODE = 1;
+    private final int SEARCH_RESULTS_REQUEST_CODE = 1;
+    private final int FAVORITES_REQUEST_CODE = 2;
 
     ImageView searchButton;
     EditText searchField;
@@ -91,9 +102,10 @@ public class MenuMain extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        if(id == R.id.favorites){
-            Intent intent = new Intent(this, SearchResults.class);
+        if(id == R.id.favorites_star){
 
+            Intent intent = new Intent(MenuMain.this, Favorites.class);
+            startActivityForResult(intent, FAVORITES_REQUEST_CODE);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -101,7 +113,7 @@ public class MenuMain extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         final Button calcButton = (Button) findViewById(R.id.calcButton);
-        if(resultCode == RESULT_OK && requestCode == 1){
+        if(resultCode == RESULT_OK && requestCode == SEARCH_RESULTS_REQUEST_CODE){
             String title = data.getStringExtra("Description");
             //String url = data.getStringExtra("ImgUrl");
             int id = Integer.valueOf(data.getStringExtra("ID"));
@@ -153,6 +165,9 @@ public class MenuMain extends AppCompatActivity {
             fav.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    // TODO: Mina, quand checked, il faut faire:
+
+
                     if (((ToggleButton) v).isChecked()) {
                         // The toggle is enabled
                         LinearLayout parent1 = (LinearLayout) v.getParent();
@@ -160,8 +175,22 @@ public class MenuMain extends AppCompatActivity {
                         Intent intent = new Intent(MenuMain.this, Favorites.class);
                         intent.putExtra("ID", Integer.toString(id));
                         Toast.makeText(MenuMain.this, Integer.toString(id), Toast.LENGTH_SHORT).show();
+
+                        // TODO: Mina, quand checked, il faut récupérer les données de la recette et faire DBHelper.insertFavorite(recipe):
+//                        DBHelper helper = new DBHelper(v.getContext());
+//                        SimpleRecipe test = new SimpleRecipe();
+//                        test.id = 156992; test.title = "Char-Grilled Beef Tenderloin with Three-Herb Chimichurri";
+//                        test.readyInMinutes = 45; test.image = "https://spoonacular.com/recipeImages/char-grilled-beef-tenderloin-with-three-herb-chimichurri-156992.jpg";
+//                        helper.insertFavorite(test);
+
+
                     } else {
                         // The toggle is disabled
+                        // TODO: Mina, quand unchecked, il faut récupérer le id de la recette et faire DBHelper.deleteByID(recipeId):
+//                        DBHelper helper = new DBHelper(v.getContext());
+//                        SimpleRecipe test = new SimpleRecipe();
+//                        test.id = 156992;
+//                        helper.deleteByID(test.id);
                     }
                 }
             });
@@ -219,8 +248,19 @@ public class MenuMain extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
+        }
+        else if(resultCode == RESULT_OK && requestCode == FAVORITES_REQUEST_CODE) {
+            // TODO: Mina, voici le data provenant de Favorites. Peux-tu t'occuper de l'affichage?
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<Recipe>>() {}.getType();
+            String json = data.getStringExtra(Favorites.FAVORITE_JSON);
+            List<SimpleRecipe> recipes = gson.fromJson(json, type);
 
-        }else{
+            for (SimpleRecipe recipe : recipes) {
+                Log.d("Json", recipe.title);
+            }
+        }
+        else{
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
         }
     }
@@ -237,7 +277,7 @@ public class MenuMain extends AppCompatActivity {
         Intent intent = new Intent(MenuMain.this, SearchResults.class);
         intent.putExtra("Query", query);
         //startActivity(intent);
-        startActivityForResult(intent, REQUEST_CODE);
+        startActivityForResult(intent, SEARCH_RESULTS_REQUEST_CODE);
 
         //return view;
     }

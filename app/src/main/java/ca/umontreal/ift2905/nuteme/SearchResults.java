@@ -89,22 +89,22 @@ public class SearchResults extends AppCompatActivity implements AdapterView.OnIt
         run.execute();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu, menu);
+//        return true;
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-        if(id == R.id.favorites){
-            Intent intent = new Intent(this, MenuMain.class);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//
+//        int id = item.getItemId();
+//        if(id == R.id.favorites_star){
+//            Intent intent = new Intent(this, MenuMain.class);
+//            startActivity(intent);
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -210,9 +210,9 @@ public class SearchResults extends AppCompatActivity implements AdapterView.OnIt
 
 
         @Override
-        protected void onPostExecute(Recipes root) {
+        protected void onPostExecute(Recipes result) {
 
-            super.onPostExecute(root);
+            super.onPostExecute(result);
             adapter = new MyAdapter();
             list.setAdapter(adapter);
             list.setOnItemClickListener(SearchResults.this);//to be completed
