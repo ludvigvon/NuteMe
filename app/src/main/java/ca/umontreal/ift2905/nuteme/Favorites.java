@@ -31,16 +31,12 @@ import ca.umontreal.ift2905.nuteme.DataModel.SimpleRecipe;
 
 public class Favorites extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
-    public static final String FAVORITE_ID = "id";
     public static final String FAVORITE_JSON = "json";
 
     ListView lv;
     Button b;
 
     DBHelper helper;
-
-//    int swipePosition;
-//    float historicX = Float.NaN, historicY = Float.NaN;
 
     List<SimpleRecipe> favorites = new ArrayList<SimpleRecipe>();
     boolean[] checked;
@@ -81,20 +77,18 @@ public class Favorites extends AppCompatActivity implements AdapterView.OnItemCl
         ListAdapter adapter = new ListAdapter();
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(Favorites.this);
-//        lv.setOnTouchListener(Favorites.this);
 
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-//        swipePosition = position;
         Log.d("Favorites", "Item clicked id: " + favorites.get(position).id);
 
-//        Intent intent = new Intent(this, DetailsActivity.class);
-//        intent.putExtra(FAVORITE_ID, favorites.get(position).id);
-//
-//        startActivity(intent);
+        Intent intent = new Intent(this, RecipeDescription.class);
+        intent.putExtra(getString(R.string.RECIPE_ID), favorites.get(position).id);
+
+        startActivity(intent);
     }
 
     @Override
@@ -175,39 +169,5 @@ public class Favorites extends AppCompatActivity implements AdapterView.OnItemCl
     }
 
 
-    /*public class APITask extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            //Toast.makeText(Favorites.this, "new favorites: ", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            APIHelper api = new APIHelper();
-            try {
-                int[] ids = new int[]{310658, 163336, 203834, 325816, 485365};
-                Recipe recipe;
-
-                for (int i = 0; i < ids.length; i++) {
-                    try {
-                        recipe = api.getRecipe(ids[i]);
-                        helper.insertFavorite(recipe);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-
-            }catch (Exception e){
-                Log.d("doInBackground", e.getMessage());
-            }
-            return null;
-        }
-    }*/
 
 }

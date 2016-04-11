@@ -49,7 +49,6 @@ public class Summary extends AppCompatActivity implements View.OnClickListener {
         getDetailedViews.setOnClickListener(this);
     }
 
-
     public class ApiAsyncTask extends AsyncTask<String, String, List<Recipe>> {
 
         List<Integer> ids;

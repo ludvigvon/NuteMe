@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -108,7 +109,14 @@ public class SearchResults extends AppCompatActivity implements AdapterView.OnIt
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        // TODO: Mina - Il ne faut pas que la description de la recette s'ouvre
+        // lorsqu'on ne fait que sélectionner le radio button
+        Log.d("Favorites", "Item clicked id: " + recipes.results.get(position).id);
 
+        Intent intent = new Intent(this, RecipeDescription.class);
+        intent.putExtra(getString(R.string.RECIPE_ID), recipes.results.get(position).id);
+
+        startActivity(intent);
     }
 
 
