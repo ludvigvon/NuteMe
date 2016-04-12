@@ -9,10 +9,12 @@ import java.util.List;
 
 import ca.umontreal.ift2905.nuteme.BusinessLogic.DataAggregator;
 import ca.umontreal.ift2905.nuteme.DataAccess.APIHelper;
+import ca.umontreal.ift2905.nuteme.DataModel.Ingredient;
 import ca.umontreal.ift2905.nuteme.DataModel.Nutrient;
 import ca.umontreal.ift2905.nuteme.DataModel.Nutrition;
 import ca.umontreal.ift2905.nuteme.DataModel.Recipe;
 import ca.umontreal.ift2905.nuteme.DataModel.Recipes;
+import ca.umontreal.ift2905.nuteme.DataModel.SimpleNutrient;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -48,8 +50,61 @@ public class DataAggregatorTest {
         return nutrients;
     }
 
+    public List<SimpleNutrient> getMockListSimpleNutrients(){
+        List<SimpleNutrient> nutrients = new ArrayList<>();
+        SimpleNutrient nutrient1 = new SimpleNutrient();
+        SimpleNutrient nutrient2 = new SimpleNutrient();
+        SimpleNutrient nutrient3 = new SimpleNutrient();
+
+        nutrient1.name = "nutrient1";
+        nutrient1.amount = 10;
+        nutrient1.unit = "mg";
+
+        nutrient2.name = "nutrient2";
+        nutrient2.amount = 20;
+        nutrient2.unit = "mg";
+
+        nutrient3.name = "nutrient3";
+        nutrient3.amount = 30;
+        nutrient3.unit = "mg";
+
+        nutrients.add(nutrient1);
+        nutrients.add(nutrient2);
+        nutrients.add(nutrient3);
+
+        return nutrients;
+    }
+
+    public List<Ingredient> getMockListIngredients(){
+        List<Ingredient> ingredients = new ArrayList<>();
+        Ingredient ingredient1 = new Ingredient();
+        Ingredient ingredient2 = new Ingredient();
+        Ingredient ingredient3 = new Ingredient();
+
+        ingredient1.name = "ingredient1";
+        ingredient1.amount = 10;
+        ingredient1.unit = "mg";
+        ingredient1.nutrients = getMockListSimpleNutrients();
+
+        ingredient2.name = "ingredient2";
+        ingredient2.amount = 20;
+        ingredient2.unit = "mg";
+        ingredient2.nutrients = getMockListSimpleNutrients();
+
+        ingredient3.name = "ingredient3";
+        ingredient3.amount = 30;
+        ingredient3.unit = "mg";
+        ingredient3.nutrients = getMockListSimpleNutrients();
+
+        ingredients.add(ingredient1);
+        ingredients.add(ingredient2);
+        ingredients.add(ingredient3);
+
+        return ingredients;
+    }
+
     @Test
-    public void getRecipe_Success() throws Exception {
+    public void getSummaryAggregateView_Success() throws Exception {
 
         List<Recipe> recipes = new ArrayList<>();
 
@@ -80,5 +135,36 @@ public class DataAggregatorTest {
 
     }
 
+    @Test
+    public void getAggregateViewByIngredient_Success() throws Exception {
+
+        List<Recipe> recipes = new ArrayList<>();
+
+        Recipe recipe1 = new Recipe();
+        Recipe recipe2 = new Recipe();
+        Recipe recipe3 = new Recipe();
+
+        recipe1.nutrition = new Nutrition();
+        recipe2.nutrition = new Nutrition();
+        recipe3.nutrition = new Nutrition();
+
+        recipe1.nutrition.nutrients = getMockListNutrients();
+        recipe2.nutrition.nutrients = getMockListNutrients();
+        recipe3.nutrition.nutrients = getMockListNutrients();
+
+        recipes.add(recipe1);
+        recipes.add(recipe2);
+        recipes.add(recipe3);
+
+        DataAggregator aggregator = new DataAggregator();
+
+        List<Nutrient> result = aggregator.getSummaryAggregateView(recipes);
+
+
+        Assert.assertTrue(result.get(0).amount == 30);
+        Assert.assertTrue(result.get(1).amount == 60);
+        Assert.assertTrue(result.get(2).amount == 90);
+
+    }
 
 }

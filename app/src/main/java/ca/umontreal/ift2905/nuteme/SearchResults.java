@@ -113,10 +113,10 @@ public class SearchResults extends AppCompatActivity implements AdapterView.OnIt
         // lorsqu'on ne fait que sélectionner le radio button
         Log.d("Favorites", "Item clicked id: " + recipes.results.get(position).id);
 
-        Intent intent = new Intent(this, RecipeDescription.class);
-        intent.putExtra(getString(R.string.RECIPE_ID), recipes.results.get(position).id);
-
-        startActivity(intent);
+//        Intent intent = new Intent(this, RecipeDescription.class);
+//        intent.putExtra(getString(R.string.RECIPE_ID), recipes.results.get(position).id);
+//
+//        startActivity(intent);
     }
 
 

@@ -41,7 +41,7 @@ public class NutrientExpandableListFragment extends Fragment {
 //        String json = args.getString(DetailedViews.RECIPES);
 //
 //        Gson gson = new Gson();
-//        Type type = new TypeToken<List<Recipe>>() {}.getType();
+//        Type type = new TypeToken<List<RecipeRatio>>() {}.getType();
 //        recipes = gson.fromJson(json, type);
 
         recipes = parentActivity.getRecipes();
