@@ -13,8 +13,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,21 +40,30 @@ public class SearchResults extends AppCompatActivity implements AdapterView.OnIt
     SimpleRecipe recipe;
     Recipes recipes;
     TextView title;
+    RadioButton radio;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_results_activity);
         title = (TextView) findViewById(R.id.titleLabel);
         list = (ListView) findViewById(R.id.listView);
+        //radio = (RadioButton) findViewById(R.id.radioButton);
         okButton = (Button) findViewById(R.id.OkButton);
+
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int position = list.getCheckedItemPosition();
-                if(position > -1){
-                    //Toast.makeText(SearchResultActivity.this, Integer.toString(position), Toast.LENGTH_SHORT).show();
+                int position;
+                for(int i = 0; i<list.getChildCount(); ++i){
+                    radio = (RadioButton)list.getChildAt(i).findViewById(R.id.radioButton);
+                    if(radio.isChecked()){
+                        position = (Integer)radio.getTag();
 
-                    Intent intent = new Intent(SearchResults.this, MenuMain.class);
+                        //int position = list.getCheckedItemPosition();
+                        if(position > -1){
+                            //Toast.makeText(SearchResultActivity.this, Integer.toString(position), Toast.LENGTH_SHORT).show();
+
+                            Intent intent = new Intent(SearchResults.this, MenuMain.class);
                     /*
                     View view = list.getChildAt(position - list.getFirstVisiblePosition());
                     TextView tv = (TextView)view.findViewById(R.id.textView);
@@ -60,25 +71,32 @@ public class SearchResults extends AppCompatActivity implements AdapterView.OnIt
                     intent.putExtra("Description",tv.getText());
                     String title = root.results.get(position).title;
                     */
-                    //Toast.makeText(SearchResultActivity.this, tv.getText(), Toast.LENGTH_SHORT).show();
-                    String title = recipes.results.get(position).title;
-                    intent.putExtra("Description",title);
-                    String imgUrl = recipes.baseUri + recipes.results.get(position).image;
-                    intent.putExtra("ImgUrl", imgUrl);
-                    int id = recipes.results.get(position).id;
-                    intent.putExtra("ID",Integer.toString(id));
-                    //Toast.makeText(SearchResultActivity.this,title, Toast.LENGTH_SHORT).show();
-                    //Toast.makeText(SearchResultActivity.this,imgUrl, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(SearchResultActivity.this, tv.getText(), Toast.LENGTH_SHORT).show();
+                            String title = recipes.results.get(position).title;
+                            intent.putExtra("Description",title);
+                            String imgUrl = recipes.baseUri + recipes.results.get(position).image;
+                            intent.putExtra("ImgUrl", imgUrl);
+                            int id = recipes.results.get(position).id;
+                            intent.putExtra("ID",Integer.toString(id));
+                            //Toast.makeText(SearchResultActivity.this,title, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(SearchResultActivity.this,imgUrl, Toast.LENGTH_SHORT).show();
 
-                    setResult(RESULT_OK, intent);
-                    finish();
+                            setResult(RESULT_OK, intent);
+                            finish();
                     /*adapter.ge
                     Intent intent = new Intent(SearchResultActivity.this, MainActivity.class);
                     intent.putExtra("descriptionText", );
                     intent.putExtra("url", );*/
-                }
-                else{
-                    Toast.makeText(SearchResults.this, "Select an item", Toast.LENGTH_SHORT).show();
+                        }
+
+                        break;
+                    }
+                    /*
+                    else{
+                        Toast.makeText(SearchResults.this, "Select an item", Toast.LENGTH_SHORT).show();
+                    }
+                    */
+
                 }
 
             }
@@ -113,10 +131,12 @@ public class SearchResults extends AppCompatActivity implements AdapterView.OnIt
         // lorsqu'on ne fait que sélectionner le radio button
         Log.d("Favorites", "Item clicked id: " + recipes.results.get(position).id);
 
-        Intent intent = new Intent(this, RecipeDescription.class);
-        intent.putExtra(getString(R.string.RECIPE_ID), recipes.results.get(position).id);
 
-        startActivity(intent);
+            Intent intent = new Intent(this, RecipeDescription.class);
+            intent.putExtra(getString(R.string.RECIPE_ID), recipes.results.get(position).id);
+
+            startActivity(intent);
+
     }
 
 
@@ -153,27 +173,34 @@ public class SearchResults extends AppCompatActivity implements AdapterView.OnIt
             ViewHolder holder;
 
             if (v == null) {
-                v = inflater.inflate(R.layout.search_results_checkable_linear_layout, parent, false);
+                v = inflater.inflate(R.layout.search_results_listitem, parent, false);
                 holder = new ViewHolder();
                 holder.imgView = (ImageView)v.findViewById(R.id.imageView);
                 holder.recipeTitle = (TextView) v.findViewById(R.id.textView);
+                holder.radioButton = (RadioButton) v.findViewById(R.id.radioButton);
+
 
                 v.setTag(holder);
                 //RadioButton radioButton = (RadioButton) v.findViewById(R.id.radioButton);
+
+
             }
             else{
                 holder = (ViewHolder)v.getTag();
             }
 
-            //RadioButton radioButton = (RadioButton) v.findViewById(R.id.radioButton);
-            //radioButton.setChecked(position == selectedPosition);
-            //radioButton.setTag(position);
-            /*radioButton.setOnClickListener(new View.OnClickListener() {
+            holder.radioButton.setChecked(position == selectedPosition);
+            holder.radioButton.setTag(position);
+
+            holder.radioButton.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
-                    selectedPosition = (Integer)v.getTag();
+                    selectedPosition = (Integer) v.getTag();
+                    notifyDataSetChanged();
                 }
-            });*/
+            });
+
 
             //if we don't use ViewHolder
             //TextView recipeTitle = (TextView) v.findViewById(R.id.textView);
@@ -196,6 +223,7 @@ public class SearchResults extends AppCompatActivity implements AdapterView.OnIt
 
             ImageView imgView;
             TextView recipeTitle;
+            RadioButton radioButton;
 
         }
     }

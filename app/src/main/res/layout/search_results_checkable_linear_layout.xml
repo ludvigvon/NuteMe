@@ -15,12 +15,13 @@
     <CheckedTextView android:layout_width="match_parent"
                      android:layout_height="wrap_content"
                      android:text="New CheckedTextView"
-                     android:id="@+id/textView"
+                     android:id="@+id/CheckedTextView"
                      android:checkMark="?android:attr/listChoiceIndicatorSingle"
                      android:layout_weight="1"
                      android:padding="20dp"
                      android:textColor="@android:color/white"
-                     android:gravity="center_vertical"/>
+                     android:gravity="center_vertical"
+                     android:checked="false"/>
 
 
  </ca.umontreal.ift2905.nuteme.SearchResultsCheckableLinearLayout>

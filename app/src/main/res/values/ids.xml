@@ -2,4 +2,6 @@
 <resources>
     <item type="id" value="integer" name="TAG_ID1"/>
     <item type="id" value="integer" name="TAG_ID2"/>
+    <item type="id" value="string" name="TAG_ID3"/>
+    <item type="id" value="string" name="TAG_ID4"/>
 </resources>
