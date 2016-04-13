@@ -56,9 +56,6 @@ public class NutrientExpandableListFragment extends Fragment {
         ListAdapter adapter = new ListAdapter();
         listView.setAdapter(adapter);
 
-
-
-
         return v;
     }
 
@@ -130,7 +127,6 @@ public class NutrientExpandableListFragment extends Fragment {
                 convertView = inflater.inflate(R.layout.nutrients_listitem, parent, false);
             }
             TextView tv = (TextView)convertView.findViewById(R.id.nutrients_item_recipe);
-            // TODO: mock text
             String name = listData.get(groupPosition).aggregatedList.get(childPosition).name;
 
             tv.setText(name);

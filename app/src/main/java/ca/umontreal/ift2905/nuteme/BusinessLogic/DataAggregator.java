@@ -61,12 +61,6 @@ public class DataAggregator {
         return result;
     }
 
-
-    /**
-     *
-     * @param recipes
-     * @return
-     */
     public GenericAggregation<IngredientNutrients> getAggregateViewByIngredient(List<Recipe> recipes) {
         // TODO: (Hani) add if > 0
         Map<String, List<IngredientNutrients>> dictIngredientNutrients = extractIngredients(recipes);
@@ -102,17 +96,19 @@ public class DataAggregator {
         item.amount = ingredient.amount;
         item.aggregatedList = new ArrayList<NutrientRecipes>();
         for (SimpleNutrient nutrient : ingredient.nutrients){
-            NutrientRecipes nr = new NutrientRecipes();
-            nr.name = nutrient.name;
-            nr.amount = nutrient.amount;
-            nr.unit = nutrient.unit;
-            nr.aggregatedList = new ArrayList<RecipeRatio>();
+            if (nutrient.amount > 0) {
+                NutrientRecipes nr = new NutrientRecipes();
+                nr.name = nutrient.name;
+                nr.amount = nutrient.amount;
+                nr.unit = nutrient.unit;
+                nr.aggregatedList = new ArrayList<RecipeRatio>();
 
-            RecipeRatio ratio = new RecipeRatio();
-            ratio.name = recipe.title;
+                RecipeRatio ratio = new RecipeRatio();
+                ratio.name = recipe.title;
 
-            item.aggregatedList.add(nr);
-            nr.aggregatedList.add(ratio);
+                item.aggregatedList.add(nr);
+                nr.aggregatedList.add(ratio);
+            }
         }
     }
 
@@ -210,14 +206,6 @@ public class DataAggregator {
         return result;
     }
 
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     *
-     * @param recipes
-     * @return
-     */
     public GenericAggregation<NutrientIngredients>  getAggregateViewByNutrient(List<Recipe> recipes){
         // TODO: (Hani) add if > 0
         Map<String, List<NutrientIngredients>> dictNutrientIngredients = extractNutrients(recipes);
@@ -233,14 +221,16 @@ public class DataAggregator {
         for (Recipe recipe : recipes) {
             for (Ingredient ingredient : recipe.nutrition.ingredients) {
                 for (SimpleNutrient nutrient : ingredient.nutrients) {
-                    String key = nutrient.name;
-                    if (dict.containsKey(key)) {
-                        List<NutrientIngredients> value = dict.get(key);
-                        mapNutrientIngredients(recipe, ingredient, nutrient, value);
-                    } else {
-                        List<NutrientIngredients> list = new ArrayList<>();
-                        mapNutrientIngredients(recipe, ingredient, nutrient, list);
-                        dict.put(key, list);
+                    if (nutrient.amount>0) {
+                        String key = nutrient.name;
+                        if (dict.containsKey(key)) {
+                            List<NutrientIngredients> value = dict.get(key);
+                            mapNutrientIngredients(recipe, ingredient, nutrient, value);
+                        } else {
+                            List<NutrientIngredients> list = new ArrayList<>();
+                            mapNutrientIngredients(recipe, ingredient, nutrient, list);
+                            dict.put(key, list);
+                        }
                     }
                 }
             }
@@ -304,7 +294,6 @@ public class DataAggregator {
 
         return result;
     }
-
 
     private List<IngredientRecipes> aggregateIngredientRecipes(Map<String, List<IngredientRecipes>> dict) {
         List<IngredientRecipes> result = new ArrayList<>();

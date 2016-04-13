@@ -97,7 +97,7 @@ public class DataAggregatorTest {
         ingredient3.name = "ingredient3";
         ingredient3.amount = 30;
         ingredient3.unit = "mg";
-        ingredient3.nutrients = getMockListSimpleNutrients(new int[]{8,10,12});
+        ingredient3.nutrients = getMockListSimpleNutrients(new int[]{0,18,12});
 
         ingredients.add(ingredient1);
         ingredients.add(ingredient2);
