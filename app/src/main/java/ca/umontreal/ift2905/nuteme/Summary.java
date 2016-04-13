@@ -76,7 +76,6 @@ public class Summary extends AppCompatActivity implements View.OnClickListener {
 
             ListAdapter adapter = new ListAdapter();
             lv.setAdapter(adapter);
-
         }
     }
 
@@ -128,6 +127,4 @@ public class Summary extends AppCompatActivity implements View.OnClickListener {
             return v;
         }
     }
-
-
 }

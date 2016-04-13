@@ -14,6 +14,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import ca.umontreal.ift2905.nuteme.BusinessLogic.DataAggregator;
+import ca.umontreal.ift2905.nuteme.DataModel.Aggregations.GenericAggregation;
+import ca.umontreal.ift2905.nuteme.DataModel.Aggregations.IngredientNutrients;
 import ca.umontreal.ift2905.nuteme.DataModel.Recipe;
 
 /**
@@ -22,8 +25,8 @@ import ca.umontreal.ift2905.nuteme.DataModel.Recipe;
 public class IngredientsFragment extends Fragment {
 
     ExpandableListView listView;
-    List<Recipe> recipes;
     DetailedViews parentActivity;
+    GenericAggregation<IngredientNutrients> aggregatedData;
 
     @Nullable
     @Override
@@ -34,18 +37,7 @@ public class IngredientsFragment extends Fragment {
         View v = inflater.inflate(R.layout.ingredients_details, container, false);
         listView = (ExpandableListView)v.findViewById(R.id.ingredients_expandableListView);
 
-//        Bundle args = getArguments();
-//        String json = args.getString(DetailedViews.RECIPES);
-//
-//        Gson gson = new Gson();
-//        Type type = new TypeToken<List<Recipe>>() {}.getType();
-//        recipes = gson.fromJson(json, type);
-
-        recipes = parentActivity.getRecipes();
-
-        for (Recipe recipe : recipes) {
-            Log.d("Json", recipe.title);
-        }
+        aggregatedData = new DataAggregator().getAggregateViewByIngredient(parentActivity.getRecipes());
 
         ListAdapter adapter = new ListAdapter();
         listView.setAdapter(adapter);
@@ -57,24 +49,22 @@ public class IngredientsFragment extends Fragment {
 
         //Context ctx;
         LayoutInflater inflater;
-
-        Recipe testRecipe = recipes.get(0);
+        List<IngredientNutrients> listData;
 
         public ListAdapter(){
             //this.ctx = context;
             inflater = (LayoutInflater)parentActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            listData = aggregatedData.aggregationList;
         }
 
         @Override
         public int getGroupCount() {
-            // TODO: aggregate ingredients over all recipes
-            return testRecipe.nutrition.ingredients.size();
+            return listData.size();
         }
 
         @Override
         public int getChildrenCount(int groupPosition) {
-            // TODO: aggregate ingredients over all recipes
-            return testRecipe.nutrition.ingredients.get(groupPosition).nutrients.size();
+            return listData.get(groupPosition).aggregatedList.size();
         }
 
         @Override
@@ -108,7 +98,7 @@ public class IngredientsFragment extends Fragment {
                 convertView = inflater.inflate(R.layout.ingredients_listheader, parent, false);
             }
             TextView tv = (TextView)convertView.findViewById(R.id.ingredients_header_text);
-            tv.setText(testRecipe.nutrition.ingredients.get(groupPosition).name);
+            tv.setText(listData.get(groupPosition).name);
             return convertView;
         }
 
@@ -119,7 +109,7 @@ public class IngredientsFragment extends Fragment {
             }
             TextView tv = (TextView)convertView.findViewById(R.id.ingredients_item_nutrient);
 
-            String name = testRecipe.nutrition.ingredients.get(groupPosition).nutrients.get(childPosition).name;
+            String name = listData.get(groupPosition).aggregatedList.get(childPosition).name;
 
             tv.setText(name);
 

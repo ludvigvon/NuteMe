@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +39,7 @@ public class RecipeFragment extends Fragment {
             recipe.title = args.getString(RecipesPagerFragment.TITLE);
             recipe.image = args.getString(RecipesPagerFragment.URL);
             //String sdesc =args.getString(RecipesPagerFragment.DESC);
-            PopulateFields();
+            populateFields();
         }
         else if (getActivity().getClass().getSimpleName().equals(RecipeDescription.class.getSimpleName())){
             Intent intent = ((RecipeDescription)getActivity()).getIntent();
@@ -53,7 +52,7 @@ public class RecipeFragment extends Fragment {
         return v;
     }
 
-    private void PopulateFields() {
+    private void populateFields() {
         // get reference to visual elements
         ImageView img = (ImageView) v.findViewById(R.id.recipe_image_details);
         TextView title = (TextView) v.findViewById(R.id.recipe_title_details);
@@ -70,7 +69,7 @@ public class RecipeFragment extends Fragment {
         protected void onPostExecute(Recipe result) {
             super.onPostExecute(recipe);
             recipe = result;
-            PopulateFields();
+            populateFields();
         }
 
         @Override
@@ -94,13 +93,13 @@ public class RecipeFragment extends Fragment {
 //    }
 //
 //    @Override
-//    protected void onPostExecute(Recipe result) {
+//    protected void onPostExecute(RecipeRatio result) {
 //        //Toast.makeText(Favorites.this, "new favorites: ", Toast.LENGTH_SHORT).show();
 ////            recipe = result;
 ////            PopulateFields();
 //    }
 //
 //    @Override
-//    protected Recipe doInBackground(Void... params) {
+//    protected RecipeRatio doInBackground(Void... params) {
 //
 //    }
