@@ -13,11 +13,19 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
+import ca.umontreal.ift2905.nuteme.DataModel.Aggregations.GenericAggregation;
+import ca.umontreal.ift2905.nuteme.DataModel.Aggregations.IngredientNutrients;
+import ca.umontreal.ift2905.nuteme.DataModel.Aggregations.IngredientRecipes;
+import ca.umontreal.ift2905.nuteme.DataModel.Aggregations.NutrientIngredients;
 import ca.umontreal.ift2905.nuteme.DataModel.Recipe;
+import ca.umontreal.ift2905.nuteme.DataModel.SimpleRecipe;
 
 /**
  * Created by h on 06/04/16.
@@ -25,8 +33,9 @@ import ca.umontreal.ift2905.nuteme.DataModel.Recipe;
 public class NutrientExpandableListFragment extends Fragment {
 
     ExpandableListView listView;
-    List<Recipe> recipes;
     DetailedViews parentActivity;
+
+    NutrientIngredients aggregatedData;
 
     @Nullable
     @Override
@@ -34,24 +43,21 @@ public class NutrientExpandableListFragment extends Fragment {
 
         parentActivity = (DetailedViews) getActivity();
 
+        Bundle args = getArguments();
+        Gson gson = new Gson();
+        Type type = new TypeToken<NutrientIngredients>() {}.getType();
+        String json = args.getString(NutrientsTabPagerFragment.NUTRIENT_INGREDIENTS_JSON);
+        aggregatedData = gson.fromJson(json, type);
+
+
         View v = inflater.inflate(R.layout.nutrients_details, container, false);
         listView = (ExpandableListView)v.findViewById(R.id.nutrients_expandableListView);
 
-//        Bundle args = getArguments();
-//        String json = args.getString(DetailedViews.RECIPES);
-//
-//        Gson gson = new Gson();
-//        Type type = new TypeToken<List<RecipeRatio>>() {}.getType();
-//        recipes = gson.fromJson(json, type);
-
-        recipes = parentActivity.getRecipes();
-
-        for (Recipe recipe : recipes) {
-            Log.d("Json", recipe.title);
-        }
-
         ListAdapter adapter = new ListAdapter();
         listView.setAdapter(adapter);
+
+
+
 
         return v;
     }
@@ -61,23 +67,25 @@ public class NutrientExpandableListFragment extends Fragment {
         //Context ctx;
         LayoutInflater inflater;
 
-        Recipe testRecipe = recipes.get(0);
+        List<IngredientRecipes> listData;
+
 
         public ListAdapter(){
             //this.ctx = context;
             inflater = (LayoutInflater)parentActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            listData = aggregatedData.aggregatedList;
         }
 
         @Override
         public int getGroupCount() {
             // TODO: aggregate nutrients over all recipes
-            return testRecipe.nutrition.ingredients.size();
+            return listData.size();
         }
 
         @Override
         public int getChildrenCount(int groupPosition) {
             // TODO: aggregate nutrients over all recipes
-            return testRecipe.nutrition.ingredients.get(groupPosition).nutrients.size();
+            return listData.get(groupPosition).aggregatedList.size();
         }
 
         @Override
@@ -111,8 +119,8 @@ public class NutrientExpandableListFragment extends Fragment {
                 convertView = inflater.inflate(R.layout.nutrients_listheader, parent, false);
             }
             TextView tv = (TextView)convertView.findViewById(R.id.nutrients_header_text);
-            // TODO: mock text
-            tv.setText(testRecipe.nutrition.ingredients.get(groupPosition).name);
+
+            tv.setText(listData.get(groupPosition).name);
             return convertView;
         }
 
@@ -123,7 +131,7 @@ public class NutrientExpandableListFragment extends Fragment {
             }
             TextView tv = (TextView)convertView.findViewById(R.id.nutrients_item_recipe);
             // TODO: mock text
-            String name = testRecipe.nutrition.ingredients.get(groupPosition).nutrients.get(childPosition).name;
+            String name = listData.get(groupPosition).aggregatedList.get(childPosition).name;
 
             tv.setText(name);
 
