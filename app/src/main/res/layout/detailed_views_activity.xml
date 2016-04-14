@@ -33,5 +33,7 @@ tools:context="ca.umontreal.ift2905.nuteme.DetailedViews">
         android:id="@+id/detailedViews_button_newSearch"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:background="#9eba8a"
+        android:padding="10dp"/>
 </RelativeLayout>

@@ -1,6 +1,9 @@
 package ca.umontreal.ift2905.nuteme;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -104,8 +107,13 @@ public class SearchResults extends AppCompatActivity implements AdapterView.OnIt
         Intent intent = getIntent();
         query = intent.getStringExtra("Query");
         title.setText("Search Results for " + query);
-        RunAPI run = new RunAPI();
-        run.execute();
+        if(APIHelper.isNetworkAvailable(SearchResults.this)) {
+            RunAPI run = new RunAPI();
+            run.execute();
+        }
+        else{
+            Toast.makeText(SearchResults.this, R.string.Network_unavailable_error, Toast.LENGTH_LONG).show();
+        }
     }
 
 //    @Override
@@ -235,11 +243,13 @@ public class SearchResults extends AppCompatActivity implements AdapterView.OnIt
         protected Recipes doInBackground(String... params) {
 
             APIHelper api = APIHelper.getInstance();
-            try {
-                recipes = api.seachRecipes(query);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
+                try {
+                    recipes = api.seachRecipes(query);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             return null;
         }
 
@@ -254,6 +264,5 @@ public class SearchResults extends AppCompatActivity implements AdapterView.OnIt
             list.setOnItemClickListener(SearchResults.this);//to be completed
         }
     }
-
 
 }

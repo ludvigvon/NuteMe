@@ -20,7 +20,6 @@
         android:contextClickable="false"
         android:focusable="false"
         android:padding="20dp"
-        android:textColor="@android:color/white"
         />
 
     <RadioButton

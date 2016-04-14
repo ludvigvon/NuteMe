@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -42,8 +43,12 @@ public class DetailedViews extends AppCompatActivity implements View.OnClickList
         newSearchButton = (Button)findViewById(R.id.detailedViews_button_newSearch);
 
         newSearchButton.setOnClickListener(this);
-
-        recipesData = APIHelper.getInstance().getDetailedRecipes();
+        if(APIHelper.isNetworkAvailable(this)) {
+            recipesData = APIHelper.getInstance().getDetailedRecipes();
+        }
+        else{
+            Toast.makeText(this, R.string.Network_unavailable_error, Toast.LENGTH_LONG).show();
+        }
 
         DetailedViewsPagerAdapter adapter = new DetailedViewsPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);

@@ -166,11 +166,14 @@ public class MenuMain extends AppCompatActivity {
                 LinearLayout ll = new LinearLayout(this);
                 ll.setLayoutParams(layoutParams);
                 ll.setOrientation(LinearLayout.HORIZONTAL);
+
+                ll.setTag(R.id.TAG_ID1, ++count);
+
                 ll.setTag(R.id.TAG_ID2, recipe.id);
                 ll.setTag(R.id.TAG_ID3, recipe.title);
                 ll.setTag(R.id.TAG_ID4, recipe.image);
                 vertLinearlayout.addView(ll);
-                count++;
+                //count++;
                 addItems(calcButton, vertLinearlayout, ll, recipe.title);
             }
         } else {

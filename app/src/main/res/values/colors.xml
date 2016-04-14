@@ -19,4 +19,6 @@
     <color name="primary_material_light_1">#4caf50</color>
     <color name="black">#b71b1b</color>
     <color name="background_material_light">#cce0be</color>
+    <color name="dim_foreground_dark">#bebebe</color>
+    <color name="darker_gray">#616161</color>
 </resources>

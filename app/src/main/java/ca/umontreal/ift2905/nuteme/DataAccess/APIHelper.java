@@ -1,6 +1,8 @@
 package ca.umontreal.ift2905.nuteme.DataAccess;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.provider.DocumentsContract;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -126,4 +128,18 @@ public class APIHelper {
         }
         return recipes;
     }
+
+
+    //method to check if network is available
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+        boolean isAvailable = false;
+        if (networkInfo != null && networkInfo.isConnected()) {
+            isAvailable = true;
+        }
+        return isAvailable;
+    }
+
+
 }
