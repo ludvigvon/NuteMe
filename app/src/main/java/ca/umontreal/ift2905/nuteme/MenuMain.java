@@ -48,6 +48,7 @@ public class MenuMain extends AppCompatActivity {
 
     String query;
     Button addButton;
+    Button removeButton;
 
     View parent;
     int count = 0;
@@ -63,6 +64,7 @@ public class MenuMain extends AppCompatActivity {
         horizLayout = (LinearLayout) findViewById(R.id.horizLinearLayout);
         horizLayout.setTag(R.id.TAG_ID1, count);
         addButton = (Button) findViewById(R.id.addButton);
+        removeButton =(Button) findViewById(R.id.removeButton);
 
         //menu_listitem button clickListener
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -89,6 +91,26 @@ public class MenuMain extends AppCompatActivity {
                 view.setTag(R.id.TAG_ID1, ++count);
                 //LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(La)
                 vertLinearlayout.addView(view);
+                //--------------->added removeButton
+                //remove button (-)
+                removeButton = (Button)view.findViewById(R.id.removeButton);
+                removeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        LinearLayout vertLinearlayout = (LinearLayout) findViewById(R.id.vertLinearLayout);//parent
+                        LinearLayout horizLinearlayout = (LinearLayout) v.getParent();
+
+                        int currentIndex = vertLinearlayout.indexOfChild(horizLinearlayout);
+                        for (int i = currentIndex + 1; i < vertLinearlayout.getChildCount(); ++i) {
+                            View child = vertLinearlayout.getChildAt(i);
+                            int tag = (int) child.getTag(R.id.TAG_ID1);
+                            child.setTag(R.id.TAG_ID1, --tag);
+                        }
+
+                        count--;
+                        vertLinearlayout.removeView(horizLinearlayout);
+                    }
+                });
             }
         });
     }//End OnCreate
@@ -211,12 +233,38 @@ public class MenuMain extends AppCompatActivity {
                     }
                     if (j == nbChilds) calcButton.setVisibility(View.INVISIBLE);
                 }
+                int k = 0;
+                int nbChilds = parent2.getChildCount();
+                for (int i = 0; i < nbChilds; ++i) {
+                    if ((Button) parent2.getChildAt(i).findViewById(R.id.removeButton) != null)
+                        ++k;
+                }
+                if (k == nbChilds){
+                    count++;
+                    LayoutInflater inflater = getLayoutInflater();
+
+                    //view now is the the linear layout of menu_listitem and we don't need to add the view to relative layout as above the parent of menu_listitem is relative layout
+                    View view = inflater.inflate(R.layout.menu_listitem_noclear, parent2, false);
+
+                    view.setTag(R.id.TAG_ID1, 0);
+
+                    for (int i = 0; i < parent2.getChildCount(); ++i) {
+                        View child = parent2.getChildAt(i);
+                        int tag = (int) child.getTag(R.id.TAG_ID1);
+                        child.setTag(R.id.TAG_ID1, ++tag);
+                    }
+                    //LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(La)
+                    parent2.addView(view,0);
+
+
+                }
+
                 if (count < 0) {
                     count = 0;
                     LayoutInflater inflater = getLayoutInflater();
 
                     //view now is the the linear layout of menu_listitem and we don't need to add the view to relative layout as above the parent of menu_listitem is relative layout
-                    View view = inflater.inflate(R.layout.menu_listitem, parent2, false);
+                    View view = inflater.inflate(R.layout.menu_listitem_noclear, parent2, false);//------------->added noclear
 
                     view.setTag(R.id.TAG_ID1, count);
                     //LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(La)
