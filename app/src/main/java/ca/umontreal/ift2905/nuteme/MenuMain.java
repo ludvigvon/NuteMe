@@ -322,12 +322,15 @@ public class MenuMain extends AppCompatActivity {
         LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         LinearLayout.LayoutParams layoutParams2 = new LinearLayout.LayoutParams(90, 90);
+        LinearLayout.LayoutParams layoutParams3 = new LinearLayout.LayoutParams(45, 45);
         layoutParams1.weight = 1;
         layoutParams2.gravity = Gravity.CENTER_VERTICAL;
+        layoutParams3.gravity = Gravity.CENTER_VERTICAL;
+        layoutParams3.rightMargin = 20;
         description.setLayoutParams(layoutParams1);
         img.setLayoutParams(layoutParams2);
 
-        fav.setLayoutParams(layoutParams2);
+        fav.setLayoutParams(layoutParams3);
 
         fav.setBackgroundResource(R.drawable.toggle_button);
         fav.setPadding(20, 20, 20, 20);
