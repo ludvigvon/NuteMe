@@ -322,7 +322,7 @@ public class MenuMain extends AppCompatActivity {
         LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         LinearLayout.LayoutParams layoutParams2 = new LinearLayout.LayoutParams(90, 90);
-        LinearLayout.LayoutParams layoutParams3 = new LinearLayout.LayoutParams(45, 45);
+        LinearLayout.LayoutParams layoutParams3 = new LinearLayout.LayoutParams(50, 50);
         layoutParams1.weight = 1;
         layoutParams2.gravity = Gravity.CENTER_VERTICAL;
         layoutParams3.gravity = Gravity.CENTER_VERTICAL;
