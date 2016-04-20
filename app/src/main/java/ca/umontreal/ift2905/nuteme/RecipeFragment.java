@@ -1,5 +1,6 @@
 package ca.umontreal.ift2905.nuteme;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -8,15 +9,23 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.List;
 
 import ca.umontreal.ift2905.nuteme.DataAccess.APIHelper;
+import ca.umontreal.ift2905.nuteme.DataModel.Aggregations.IngredientNutrients;
+import ca.umontreal.ift2905.nuteme.DataModel.Ingredient;
 import ca.umontreal.ift2905.nuteme.DataModel.Recipe;
 import ca.umontreal.ift2905.nuteme.Utilities.Network;
 
@@ -38,9 +47,14 @@ public class RecipeFragment extends Fragment {
 
         if (getActivity().getClass().getSimpleName().equals(DetailedViews.class.getSimpleName())) {
             Bundle args = getArguments();
-            recipe.title = args.getString(RecipesPagerFragment.TITLE);
-            recipe.image = args.getString(RecipesPagerFragment.URL);
-            //String sdesc =args.getString(RecipesPagerFragment.DESC);
+
+            Gson gson = new Gson();
+            Type type = new TypeToken<Recipe>() {}.getType();
+
+            String json = args.getString(RecipesPagerFragment.RECIPE_JSON);
+
+            recipe = gson.fromJson(json, type);
+
             populateFields();
         }
         else if (getActivity().getClass().getSimpleName().equals(RecipeDescription.class.getSimpleName())){
@@ -60,8 +74,11 @@ public class RecipeFragment extends Fragment {
 
     private void populateFields() {
         // get reference to visual elements
-        ImageView img = (ImageView) v.findViewById(R.id.recipe_image_details);
-        TextView title = (TextView) v.findViewById(R.id.recipe_title_details);
+        ImageView img = (ImageView) v.findViewById(R.id.recipe_image);
+        TextView title = (TextView) v.findViewById(R.id.recipe_title);
+        ListView ingredients = (ListView)v.findViewById(R.id.recipe_listview_ingredients);
+
+        ingredients.setAdapter(new IngredientsListAdapter());
 
 
         // set values to visual elements
@@ -90,22 +107,46 @@ public class RecipeFragment extends Fragment {
             return result;
         }
     }
+
+    public class IngredientsListAdapter extends BaseAdapter{
+
+        LayoutInflater inflater;
+        List<Ingredient> ingredients;
+
+        public IngredientsListAdapter() {
+            inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            ingredients = recipe.extendedIngredients;
+        }
+
+        @Override
+        public int getCount() {
+            return ingredients.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View v = convertView;
+            if (v == null) {
+                v = inflater.inflate(R.layout.recipes_details_ingredient_listitem, parent, false);
+            }
+
+            TextView title = (TextView)v.findViewById(R.id.recipe_ingredient_title);
+
+            Ingredient ing = ingredients.get(position);
+
+            title.setText(ing.originalString);
+
+           return v;
+        }
+    }
 }
-//
-//
-//    @Override
-//    protected void onPreExecute() {
-//        super.onPreExecute();
-//    }
-//
-//    @Override
-//    protected void onPostExecute(RecipeRatio result) {
-//        //Toast.makeText(Favorites.this, "new favorites: ", Toast.LENGTH_SHORT).show();
-////            recipe = result;
-////            PopulateFields();
-//    }
-//
-//    @Override
-//    protected RecipeRatio doInBackground(Void... params) {
-//
-//    }

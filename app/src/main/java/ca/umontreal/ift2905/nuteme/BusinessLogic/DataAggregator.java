@@ -39,7 +39,7 @@ public class DataAggregator {
                 String key = nutrient.title;
                 if (dict.containsKey(key)) {
                     Nutrient value = dict.get(key);
-                    if (value.unit.equals(nutrient.unit))
+                    if ((value.unit != null &&  value.unit.equals(nutrient.unit)) || (value.unit == nutrient.unit))
                         value.amount += nutrient.amount;
                     else
                         Log.d("DataAggregator", "Unit mismatch in getSummaryAggregateView");
@@ -125,7 +125,7 @@ public class DataAggregator {
 
             for (int i = 1; i < value.size(); i++) {
                 IngredientNutrients next = value.get(i);
-                if (next.unit.equals(first.unit)) {
+                if ((next.unit != null &&  next.unit.equals(first.unit)) || (next.unit == first.unit)) {
                     first.amount += next.amount;
                     first.aggregatedList.addAll(next.aggregatedList);
                 } else
@@ -162,7 +162,7 @@ public class DataAggregator {
 
             for (int i = 1; i < value.size(); i++) {
                 NutrientRecipes next = value.get(i);
-                if (next.unit.equals(first.unit)) {
+                if ((next.unit != null &&  next.unit.equals(first.unit)) || (next.unit == first.unit))  {
                     first.amount += next.amount;
                     first.aggregatedList.addAll(next.aggregatedList);
                 } else
@@ -271,7 +271,7 @@ public class DataAggregator {
 
             for (int i = 1; i < value.size(); i++) {
                 NutrientIngredients next = value.get(i);
-                if (next.unit.equals(first.unit)) {
+                if ((next.unit != null &&  next.unit.equals(first.unit)) || (next.unit == first.unit)) {
                     first.amount += next.amount;
                     first.aggregatedList.addAll(next.aggregatedList);
                 } else
@@ -308,7 +308,7 @@ public class DataAggregator {
 
             for (int i = 1; i < value.size(); i++) {
                 IngredientRecipes next = value.get(i);
-                if (next.unit.equals(first.unit)) {
+                if ((next.unit != null &&  next.unit.equals(first.unit)) || (next.unit == first.unit)) {
                     first.amount += next.amount;
                     first.aggregatedList.addAll(next.aggregatedList);
                 } else

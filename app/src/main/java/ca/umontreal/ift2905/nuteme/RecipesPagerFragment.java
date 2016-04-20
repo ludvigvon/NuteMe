@@ -9,18 +9,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.List;
 
 import ca.umontreal.ift2905.nuteme.DataModel.Recipe;
+import ca.umontreal.ift2905.nuteme.DataModel.SimpleRecipe;
 
 /**
  * Created by h on 06/04/16.
  */
 public class RecipesPagerFragment extends Fragment {
 
-    public static final String TITLE = "TITLE";
-    public static final String URL = "URL";
-    public static final String DESC = "DESC";
+    public static final String RECIPE_JSON = "RecipeJson";
 
     ViewPager pager;
     DetailedViews parentActivity;
@@ -54,14 +57,13 @@ public class RecipesPagerFragment extends Fragment {
             Fragment fragment = null;
 
             fragment = new RecipeFragment();
-            String title = recipes.get(position).title;
-            String url = recipes.get(position).image;
-            //String desc = recipes.get(position).
+            Recipe recipe = recipes.get(position);
+            Gson gson = new Gson();
+            Type type = new TypeToken<Recipe>() {}.getType();
+            String json = gson.toJson(recipe, type);
 
             Bundle bundle = new Bundle();
-            bundle.putString(TITLE, title);
-            bundle.putString(URL, url);
-            //bundle.putString(DESC, desc);
+            bundle.putString(RECIPE_JSON, json);
             fragment.setArguments(bundle);
             return fragment;
         }
