@@ -177,7 +177,7 @@ public class MenuMain extends AppCompatActivity {
                 addItems(calcButton, vertLinearlayout, ll, recipe.title);
             }
         } else {
-            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Nothing Selected", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -303,7 +303,7 @@ public class MenuMain extends AppCompatActivity {
 //                        test.id = 156992; test.title = "Char-Grilled Beef Tenderloin with Three-Herb Chimichurri";
 //                        test.readyInMinutes = 45; test.image = "https://spoonacular.com/recipeImages/char-grilled-beef-tenderloin-with-three-herb-chimichurri-156992.jpg";
                     helper.insertFavorite(recipe);
-
+                    Toast.makeText(MenuMain.this, "Added To Favorite", Toast.LENGTH_SHORT).show();
 
                 } else {
                     // The toggle is disabled
@@ -311,6 +311,7 @@ public class MenuMain extends AppCompatActivity {
                     //test.id = 156992;
                     recipe.id = id;
                     helper.deleteByID(recipe.id);
+                    Toast.makeText(MenuMain.this, "Removed From Favorite", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -322,7 +323,7 @@ public class MenuMain extends AppCompatActivity {
         LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         LinearLayout.LayoutParams layoutParams2 = new LinearLayout.LayoutParams(90, 90);
-        LinearLayout.LayoutParams layoutParams3 = new LinearLayout.LayoutParams(50, 50);
+        LinearLayout.LayoutParams layoutParams3 = new LinearLayout.LayoutParams(55, 55);
         layoutParams1.weight = 1;
         layoutParams2.gravity = Gravity.CENTER_VERTICAL;
         layoutParams3.gravity = Gravity.CENTER_VERTICAL;
