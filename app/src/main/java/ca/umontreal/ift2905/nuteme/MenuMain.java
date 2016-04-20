@@ -150,7 +150,6 @@ public class MenuMain extends AppCompatActivity {
             addItems(calcButton, vertLinearlayout, ll, title);
 
         } else if (resultCode == RESULT_OK && requestCode == FAVORITES_REQUEST_CODE) {
-            // TODO: Mina, voici le data provenant de Favorites. Peux-tu t'occuper de l'affichage?
             Gson gson = new Gson();
             Type type = new TypeToken<List<Recipe>>() {
             }.getType();
@@ -295,8 +294,6 @@ public class MenuMain extends AppCompatActivity {
                     //intent.putExtra("ID", Integer.toString(id));
                     //Toast.makeText(MenuMain.this, Integer.toString(id), Toast.LENGTH_SHORT).show();
 
-                    // TODO: Mina, quand checked, il faut récupérer les données de la recette et faire DBHelper.insertFavorite(recipe)
-
                     recipe.id = id;
                     recipe.title = title;
                     recipe.image = url;
@@ -307,7 +304,6 @@ public class MenuMain extends AppCompatActivity {
 
                 } else {
                     // The toggle is disabled
-                    // TODO: Mina, quand unchecked, il faut récupérer le id de la recette et faire DBHelper.deleteByID(recipeId):
                     //test.id = 156992;
                     recipe.id = id;
                     helper.deleteByID(recipe.id);

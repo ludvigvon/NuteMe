@@ -13,4 +13,11 @@ public class Format {
         return bd.floatValue();
     }
 
+    public static String formatUnit(String unit) {
+        if (unit != null && (unit.equals("Tablespoons") || unit.equals("Tablespoon")))
+            unit = "tbsp";
+        return unit;
+    }
+
+
 }

@@ -10,19 +10,36 @@
         <!--android:id="@+id/ingredients_header_image"-->
         <!--android:layout_gravity="center_vertical" />-->
 
+
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
+        android:text="Small Text"
         android:id="@+id/ingredients_header_text"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:scrollHorizontally="true"
         android:paddingLeft="40dp"
         android:paddingTop="5dp"
         android:paddingRight="5dp"
         android:paddingBottom="5dp"
+        android:layout_weight="1"
         android:textSize="14dp"
         android:textStyle="bold" />
 
+    <TextView
+        android:layout_width="103dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/ingredients_header_qty"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:scrollHorizontally="true"
+        android:padding="5dp"
+        android:textSize="12dp"
+        android:textStyle="bold" />
 
 
 </LinearLayout>

@@ -75,13 +75,11 @@ public class NutrientExpandableListFragment extends Fragment {
 
         @Override
         public int getGroupCount() {
-            // TODO: aggregate nutrients over all recipes
             return listData.size();
         }
 
         @Override
         public int getChildrenCount(int groupPosition) {
-            // TODO: aggregate nutrients over all recipes
             return listData.get(groupPosition).aggregatedList.size();
         }
 

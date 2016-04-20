@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
-        android:id="@+id/ingredients_item_qty"
+        android:id="@+id/ingredients_item_nutrient_qty"
         android:padding="5dp" />
 
 </LinearLayout>

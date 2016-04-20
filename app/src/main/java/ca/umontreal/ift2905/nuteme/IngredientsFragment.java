@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,8 @@ import java.util.List;
 import ca.umontreal.ift2905.nuteme.BusinessLogic.DataAggregator;
 import ca.umontreal.ift2905.nuteme.DataModel.Aggregations.GenericAggregation;
 import ca.umontreal.ift2905.nuteme.DataModel.Aggregations.IngredientNutrients;
-import ca.umontreal.ift2905.nuteme.DataModel.Recipe;
+import ca.umontreal.ift2905.nuteme.DataModel.Aggregations.NutrientRecipes;
+import ca.umontreal.ift2905.nuteme.Utilities.Format;
 
 /**
  * Created by h on 26/03/16.
@@ -97,8 +97,14 @@ public class IngredientsFragment extends Fragment {
             if(convertView==null){
                 convertView = inflater.inflate(R.layout.ingredients_listheader, parent, false);
             }
-            TextView tv = (TextView)convertView.findViewById(R.id.ingredients_header_text);
-            tv.setText(listData.get(groupPosition).name);
+            IngredientNutrients ing = listData.get(groupPosition);
+
+            TextView name = (TextView)convertView.findViewById(R.id.ingredients_header_text);
+            name.setText(ing.name);
+
+            TextView qty = (TextView)convertView.findViewById(R.id.ingredients_header_qty);
+            qty.setText(Format.round(ing.amount,2) + " " + Format.formatUnit(ing.unit));
+
             return convertView;
         }
 
@@ -107,11 +113,14 @@ public class IngredientsFragment extends Fragment {
             if(convertView==null){
                 convertView = inflater.inflate(R.layout.ingredients_listitem, parent, false);
             }
+
+            NutrientRecipes nut = listData.get(groupPosition).aggregatedList.get(childPosition);
+
             TextView tv = (TextView)convertView.findViewById(R.id.ingredients_item_nutrient);
+            tv.setText(nut.name);
 
-            String name = listData.get(groupPosition).aggregatedList.get(childPosition).name;
-
-            tv.setText(name);
+            TextView qty = (TextView)convertView.findViewById(R.id.ingredients_item_nutrient_qty);
+            qty.setText(Format.round(nut.amount,2) + " " + nut.unit);
 
             return convertView;
         }
