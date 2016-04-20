@@ -67,6 +67,13 @@ public class DataAggregator {
 
         GenericAggregation<IngredientNutrients> result = new GenericAggregation<>(aggregateIngredientNutrients(dictIngredientNutrients));
 
+        Collections.sort(result.aggregationList, new Comparator<IngredientNutrients>() {
+            @Override
+            public int compare(IngredientNutrients lhs, IngredientNutrients rhs) {
+                return lhs.name.compareTo(rhs.name);
+            }
+        });
+
         return result;
     }
 
@@ -211,6 +218,13 @@ public class DataAggregator {
         Map<String, List<NutrientIngredients>> dictNutrientIngredients = extractNutrients(recipes);
 
         GenericAggregation<NutrientIngredients> result = new GenericAggregation<>(aggregateNutrientIngredients(dictNutrientIngredients));
+
+        Collections.sort(result.aggregationList, new Comparator<NutrientIngredients>() {
+            @Override
+            public int compare(NutrientIngredients lhs, NutrientIngredients rhs) {
+                return lhs.name.compareTo(rhs.name);
+            }
+        });
 
         return result;
     }
