@@ -30,6 +30,7 @@ import java.io.IOException;
 import ca.umontreal.ift2905.nuteme.DataAccess.APIHelper;
 import ca.umontreal.ift2905.nuteme.DataModel.Recipes;
 import ca.umontreal.ift2905.nuteme.DataModel.SimpleRecipe;
+import ca.umontreal.ift2905.nuteme.Utilities.Network;
 
 /**
  * Created by h on 09/04/16.
@@ -107,7 +108,7 @@ public class SearchResults extends AppCompatActivity implements AdapterView.OnIt
         Intent intent = getIntent();
         query = intent.getStringExtra("Query");
         title.setText("Search Results for " + query);
-        if(APIHelper.isNetworkAvailable(SearchResults.this)) {
+        if(Network.isNetworkAvailable(SearchResults.this)) {
             RunAPI run = new RunAPI();
             run.execute();
         }

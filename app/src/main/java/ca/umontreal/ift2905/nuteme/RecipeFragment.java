@@ -18,6 +18,7 @@ import java.io.IOException;
 
 import ca.umontreal.ift2905.nuteme.DataAccess.APIHelper;
 import ca.umontreal.ift2905.nuteme.DataModel.Recipe;
+import ca.umontreal.ift2905.nuteme.Utilities.Network;
 
 /**
  * Created by h on 26/03/16.
@@ -45,7 +46,7 @@ public class RecipeFragment extends Fragment {
         else if (getActivity().getClass().getSimpleName().equals(RecipeDescription.class.getSimpleName())){
             Intent intent = ((RecipeDescription)getActivity()).getIntent();
             recipe.id = intent.getIntExtra(getString(R.string.RECIPE_ID), 0);
-            if(APIHelper.isNetworkAvailable(getActivity())) {
+            if(Network.isNetworkAvailable(getActivity())) {
                 APITask apiTask = new APITask();
                 apiTask.execute();
             }

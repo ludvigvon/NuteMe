@@ -19,6 +19,7 @@ import java.util.List;
 
 import ca.umontreal.ift2905.nuteme.DataAccess.APIHelper;
 import ca.umontreal.ift2905.nuteme.DataModel.Recipe;
+import ca.umontreal.ift2905.nuteme.Utilities.Network;
 
 public class DetailedViews extends AppCompatActivity implements View.OnClickListener {
 
@@ -43,7 +44,7 @@ public class DetailedViews extends AppCompatActivity implements View.OnClickList
         newSearchButton = (Button)findViewById(R.id.detailedViews_button_newSearch);
 
         newSearchButton.setOnClickListener(this);
-        if(APIHelper.isNetworkAvailable(this)) {
+        if(Network.isNetworkAvailable(this)) {
             recipesData = APIHelper.getInstance().getDetailedRecipes();
         }
         else{

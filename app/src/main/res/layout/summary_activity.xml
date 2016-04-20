@@ -9,11 +9,35 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ca.umontreal.ift2905.nuteme.Summary">
 
-    <ListView
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Total Nutritional Value Summary"
+        android:id="@+id/textView2"
+        android:padding="15dp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="% Daily Values"
+        android:id="@+id/textView3"
+        android:textAlignment="gravity"
+        android:padding="10dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/textView2"
+        android:layout_alignRight="@+id/summary_listView"
+        android:layout_alignEnd="@+id/summary_listView" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="340dp"
         android:id="@+id/summary_listView"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:clickable="false"
@@ -25,7 +49,7 @@
         android:text="Get Detailed Views"
         android:id="@+id/summary_button_detailedViews"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="#9eba8a"
-        android:padding="10dp"/>
+        android:layout_centerHorizontal="true" />
+
+
 </RelativeLayout>

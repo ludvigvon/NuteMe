@@ -26,6 +26,8 @@ import ca.umontreal.ift2905.nuteme.DataModel.Nutrient;
 import ca.umontreal.ift2905.nuteme.DataModel.Nutrition;
 import ca.umontreal.ift2905.nuteme.DataModel.Recipe;
 import ca.umontreal.ift2905.nuteme.DataModel.SimpleRecipe;
+import ca.umontreal.ift2905.nuteme.Utilities.Format;
+import ca.umontreal.ift2905.nuteme.Utilities.Network;
 
 public class Summary extends AppCompatActivity implements View.OnClickListener {
 
@@ -42,7 +44,7 @@ public class Summary extends AppCompatActivity implements View.OnClickListener {
 
         Intent intent = getIntent();
         List<Integer> ids = intent.getIntegerArrayListExtra(MenuMain.MENU_IDS);
-        if(APIHelper.isNetworkAvailable(this)) {
+        if(Network.isNetworkAvailable(this)) {
             ApiAsyncTask run = new ApiAsyncTask(ids);
             run.execute();
         }
@@ -123,12 +125,14 @@ public class Summary extends AppCompatActivity implements View.OnClickListener {
 
 
             TextView title = (TextView) v.findViewById(R.id.summary_listitem_nutrient);
-            TextView amount = (TextView) v.findViewById(R.id.summary_listitem_qty);
+            //TextView amount = (TextView) v.findViewById(R.id.summary_listitem_qty);
+            TextView percentOfDailyNeeds = (TextView)v.findViewById(R.id.summary_listitem_percent);
 
             Nutrient nutrient = nutritionSummary.get(position);
 
-            title.setText(nutrient.title);
-            amount.setText(nutrient.amount + nutrient.unit);
+            title.setText(nutrient.title +"   " + Format.round(nutrient.amount, 2) + nutrient.unit);
+            //amount.setText(nutrient.amount + nutrient.unit);
+            percentOfDailyNeeds.setText(nutrient.percentOfDailyNeeds +"%");
 
             return v;
         }

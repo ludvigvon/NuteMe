@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/NuteMe.iml" filepath="$PROJECT_DIR$/NuteMe.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NuteMeFinal.iml" filepath="$PROJECT_DIR$/NuteMeFinal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
