@@ -14,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -41,8 +42,13 @@ public class Summary extends AppCompatActivity implements View.OnClickListener {
 
         Intent intent = getIntent();
         List<Integer> ids = intent.getIntegerArrayListExtra(MenuMain.MENU_IDS);
-        ApiAsyncTask run = new ApiAsyncTask(ids);
-        run.execute();
+        if(APIHelper.isNetworkAvailable(this)) {
+            ApiAsyncTask run = new ApiAsyncTask(ids);
+            run.execute();
+        }
+        else{
+            Toast.makeText(this, R.string.Network_unavailable_error, Toast.LENGTH_LONG).show();
+        }
 
         lv = (ListView)findViewById(R.id.summary_listView);
         getDetailedViews = (Button)findViewById(R.id.summary_button_detailedViews);

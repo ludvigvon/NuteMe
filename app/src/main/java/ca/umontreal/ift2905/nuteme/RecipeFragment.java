@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -44,9 +45,13 @@ public class RecipeFragment extends Fragment {
         else if (getActivity().getClass().getSimpleName().equals(RecipeDescription.class.getSimpleName())){
             Intent intent = ((RecipeDescription)getActivity()).getIntent();
             recipe.id = intent.getIntExtra(getString(R.string.RECIPE_ID), 0);
-
-            APITask apiTask = new APITask();
-            apiTask.execute();
+            if(APIHelper.isNetworkAvailable(getActivity())) {
+                APITask apiTask = new APITask();
+                apiTask.execute();
+            }
+            else{
+                Toast.makeText(getActivity(), R.string.Network_unavailable_error, Toast.LENGTH_LONG).show();
+            }
         }
 
         return v;
